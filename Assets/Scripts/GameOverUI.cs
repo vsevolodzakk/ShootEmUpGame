@@ -8,7 +8,7 @@ public class GameOverUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerController.onPlayerDeath += GameOverMessage;
+        PlayerController.OnPlayerDeath += GameOverMessage;
     }
  
     private void GameOverMessage()
@@ -18,6 +18,6 @@ public class GameOverUI : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerController.onPlayerDeath -= GameOverMessage;
+        PlayerController.OnPlayerDeath -= GameOverMessage;
     }
 }

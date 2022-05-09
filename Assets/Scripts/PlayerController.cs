@@ -32,14 +32,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GunController _gun;
 
     public delegate void PlayerDeath();
-    public static event PlayerDeath onPlayerDeath;
+    public static event PlayerDeath OnPlayerDeath;
 
     public delegate void PlayerHit();
-    public static event PlayerHit onPlayerHit;
+    public static event PlayerHit OnPlayerHit;
 
     private void OnEnable()
     {
-        HealthPickupObject.onHealthPickupObjectTaken += AddHealth;
+        HealthPickupObject.OnHealthPickupObjectTaken += AddHealth;
     }
 
     private void Start()
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 isAlive = false;
                 _playerDeadSound.Play();
                 _animator.SetTrigger("gotDead");
-                onPlayerDeath?.Invoke();
+                OnPlayerDeath?.Invoke();
             }
 
             // Footstep Audio
@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private void AimTowardMouse()
     {
-        // Mouse cursor look direction
+        // Look in mouse cursor direction
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, _aimLayerMask))
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         if(isAlive == true)
         {
-            // Hit by Enemy event
+            // Hit by Enemy event shooting
             if (other.CompareTag("Enemy") && health > 0
                 && !other.gameObject.GetComponent<EnemyControllerPooled>().isDead 
                     || other.CompareTag("EnemyBullet"))
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
                 _hitMarker.Play();
                 _playerHitSound.Play();
                 Debug.Log("Player HIT!");
-                onPlayerHit?.Invoke();
+                OnPlayerHit?.Invoke();
             }
         }       
     }
@@ -150,13 +150,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private void TestFunc()
-    //{
-    //    Debug.Log("Message From Event Subscriber");
-    //}
-
     private void OnDisable()
     {
-        HealthPickupController.onHealthPickupTaken -= AddHealth;
+        HealthPickupObject.OnHealthPickupObjectTaken -= AddHealth;
     }
 }

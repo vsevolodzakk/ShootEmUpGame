@@ -18,12 +18,11 @@ public class GunController : MonoBehaviour
     [SerializeField] private AudioSource _reloadSound;
 
     public delegate void GunFire();
-    public static event GunFire onGunFire;
+    public static event GunFire OnGunFire;
 
     private void OnEnable()
     {
-        PickupController.onPickupTaken += AddAmmo;
-
+        PickupController.OnPickupTaken += AddAmmo;
     }
 
     private void Start()
@@ -33,6 +32,7 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
+        // Player gun fire conditions
         if (Input.GetButtonDown("Fire1")
                 && _player.isAlive && ammo > 0
                     && _sceneController.gameOnPause == false)
@@ -53,13 +53,12 @@ public class GunController : MonoBehaviour
         shot.transform.rotation = transform.rotation;
         shot.transform.position = transform.position;
         shot.gameObject.SetActive(true);
-        onGunFire?.Invoke();
+        OnGunFire?.Invoke();
         _shotFiredSound.Play();
     }
 
     private void AddAmmo()
     {
-
         ammo += _ammoFromPickup;
         if (ammo >= 100)
             ammo = 100;
@@ -68,6 +67,6 @@ public class GunController : MonoBehaviour
 
     private void OnDisable()
     {
-        PickupController.onPickupTaken -= AddAmmo;
+        PickupController.OnPickupTaken -= AddAmmo;
     }
 }

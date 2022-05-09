@@ -18,11 +18,13 @@ public class MainMenu : MonoBehaviour
         _hiScore = PlayerPrefs.GetInt("HiScore");
         _hiScoreText.text = "Hi-Score: " + _hiScore.ToString();
     }
+
     public void PlayGame()
     {
         // Begin Play
         Debug.Log("Starting game.");
     }
+
     public void QuitGame()
     {
         // Quit program

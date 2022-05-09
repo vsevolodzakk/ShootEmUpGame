@@ -74,6 +74,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         }  
         else _animator.SetBool("isRunning", false);
 
+        // Stop enemy after Player death
         if (_player.gameObject.GetComponent<PlayerController>().isAlive == false)
         {
             _enemy.isStopped = true;
@@ -81,6 +82,8 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             // Disable animations
             _animator.SetBool("isRunning", false);
         }
+
+        // Enemy steps sound
         if (_isRunning)
         {
             if (!_footstepsSound.isPlaying)
@@ -115,7 +118,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
                 _takeHitSound.Play();
             }
 
-            // Hit sound effect
+            // Hit visual effect
             _ps.Play();
         }
        
@@ -124,7 +127,6 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         {
             StartCoroutine(EnemyMeleeAttacks());
         }
-       
     }
 
     private IEnumerator EnemyTakeHit()

@@ -21,7 +21,6 @@ public class SceneController : MonoBehaviour
     
     public bool gameOnPause = false;
     
-
     private void OnEnable()
     {
         _scene = SceneManager.GetActiveScene();
@@ -29,7 +28,7 @@ public class SceneController : MonoBehaviour
             _mainMenuMusic.Play();
 
         if(_scene.buildIndex == 1)
-            PlayerController.onPlayerDeath += GameOverMenu;
+            PlayerController.OnPlayerDeath += GameOverMenu;
 
         Debug.Log(Screen.currentResolution);
     }
@@ -100,7 +99,7 @@ public class SceneController : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerController.onPlayerDeath -= GameOverMenu;
+        PlayerController.OnPlayerDeath -= GameOverMenu;
     }
 
     public void LoadLevel(int scneneIndex)

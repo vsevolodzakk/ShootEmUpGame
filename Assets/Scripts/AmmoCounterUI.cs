@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
 public class AmmoCounterUI : MonoBehaviour
 {
     [SerializeField] private GunController _gun;
@@ -9,8 +8,8 @@ public class AmmoCounterUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PickupController.onPickupTaken += CountAmmo;
-        GunController.onGunFire += CountAmmo;
+        PickupController.OnPickupTaken += CountAmmo;
+        GunController.OnGunFire += CountAmmo;
         
         _ammoText = GetComponent<Text>();
         CountAmmo();
@@ -20,9 +19,10 @@ public class AmmoCounterUI : MonoBehaviour
     {
         _ammoText.text = "Ammo: " + _gun.ammo.ToString();
     }
+
     private void OnDisable()
     {
-        GunController.onGunFire -= CountAmmo;
-        PickupController.onPickupTaken -= CountAmmo;
+        GunController.OnGunFire -= CountAmmo;
+        PickupController.OnPickupTaken -= CountAmmo;
     }
 }

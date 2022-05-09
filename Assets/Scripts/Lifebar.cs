@@ -10,8 +10,8 @@ public class Lifebar : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerController.onPlayerHit += SubstractHp;
-        HealthPickupObject.onHealthPickupObjectTaken += AddHp;
+        PlayerController.OnPlayerHit += SubstractHp;
+        HealthPickupObject.OnHealthPickupObjectTaken += AddHp;
     }
 
     private void SubstractHp()
@@ -42,7 +42,7 @@ public class Lifebar : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerController.onPlayerHit -= SubstractHp;
-        HealthPickupObject.onHealthPickupObjectTaken -= AddHp;
+        PlayerController.OnPlayerHit -= SubstractHp;
+        HealthPickupObject.OnHealthPickupObjectTaken -= AddHp;
     }
 }

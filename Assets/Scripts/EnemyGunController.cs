@@ -14,8 +14,7 @@ public class EnemyGunController : MonoBehaviour
     private Transform _player;
     private float _fireRate = .5f;
     private float _fireTimer = 0f;
-    
-
+ 
     private Ray _ray;
 
     void Start()
@@ -27,10 +26,12 @@ public class EnemyGunController : MonoBehaviour
 
     void Update()
     {
+        // Check if Player on line of fire
         _ray = new Ray(transform.position, _player.position);
         _fireTimer += Time.deltaTime;
 
         RaycastHit _hit;
+        // Fire
         if(_enemy.isDead == false && _sceneController.gameOnPause == false)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9)
@@ -47,6 +48,7 @@ public class EnemyGunController : MonoBehaviour
         }  
     }
 
+    // Single fire mode
     private void EnemyFire()
     {
         var _bullet = _bulletPool.Get();
@@ -57,6 +59,7 @@ public class EnemyGunController : MonoBehaviour
         _shotFiredSound.Play();
     }
 
+    // Burst gun mode for Boss (and maybe some ordinary enemy)
     IEnumerator HeavyGunFire()
     {
         for (int i = 0; i < 5; i++)

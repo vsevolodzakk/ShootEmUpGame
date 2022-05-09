@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour, IBulletPooled
 {
@@ -26,6 +24,7 @@ public class Bullet : MonoBehaviour, IBulletPooled
     {
         _lifetime = 0f;
     }
+
     private void Update()
     {
         transform.Translate(Vector3.forward * _speed * Time.deltaTime);
@@ -33,6 +32,7 @@ public class Bullet : MonoBehaviour, IBulletPooled
         if (_lifetime > _maxLifetime)
             Pool.ReturnToPool(this.gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") || other.CompareTag("Wall") || other.CompareTag("Player"))

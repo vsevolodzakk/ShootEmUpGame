@@ -14,7 +14,7 @@ public class ScoreCounter : MonoBehaviour
     private void OnEnable()
     {
         EnemyControllerPooled.OnEnemyDies += ScoreKill;
-        PlayerController.onPlayerDeath += CheckHiScore;
+        PlayerController.OnPlayerDeath += CheckHiScore;
     }
 
     private void Start()
@@ -36,7 +36,7 @@ public class ScoreCounter : MonoBehaviour
     private void OnDisable()
     {
         EnemyControllerPooled.OnEnemyDies -= ScoreKill;
-        PlayerController.onPlayerDeath -= CheckHiScore;
+        PlayerController.OnPlayerDeath -= CheckHiScore;
     }
 
     private void SaveHiScore()
@@ -45,8 +45,8 @@ public class ScoreCounter : MonoBehaviour
         _hiScoreText.text = "New Hi-Score: " + _killCount.ToString();
         _hiScoreTextAnimation.SetTrigger("hiscore");
         PlayerPrefs.SetInt("HiScore", _killCount);
-        
     }
+
     private void LoadHiScore()
     {
         _hiScore = PlayerPrefs.GetInt("HiScore");

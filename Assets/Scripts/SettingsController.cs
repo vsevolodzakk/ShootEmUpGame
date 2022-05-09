@@ -22,6 +22,5 @@ public class SettingsController : MonoBehaviour
         _master.SetFloat("FxVol", _soundFxControl.value);
         PlayerPrefs.SetFloat("MusicVol", _musicControl.value);
         PlayerPrefs.SetFloat("FxVol", _soundFxControl.value);
-
     }
 }

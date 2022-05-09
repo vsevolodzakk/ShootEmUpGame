@@ -13,14 +13,14 @@ public class FlamerController : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        _enemy = GetComponent<EnemyControllerPooled>();
-        
+        _enemy = GetComponent<EnemyControllerPooled>(); 
     }
 
     void Update()
     {
         _ray = new Ray(transform.position, _player.position);
         RaycastHit _hit;
+        // Flame player
         if (_enemy.isDead == false)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9))
@@ -33,13 +33,11 @@ public class FlamerController : MonoBehaviour
             {
                 _firePs.Stop();
             }
-
         }
         else
         {
             _firePs.Stop();
             _flamerSound.Stop();
         }
-
     }
 }
