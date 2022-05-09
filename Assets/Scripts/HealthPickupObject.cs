@@ -3,15 +3,16 @@
 public class HealthPickupObject : PickupObject
 {
     public delegate void HealthPickupObjectTaken();
-    public static event HealthPickupObjectTaken onHealthPickupObjectTaken;
+    public static event HealthPickupObjectTaken OnHealthPickupObjectTaken;
 
     [SerializeField] private PlayerController _player;
 
-    private void OnTriggerEnter(Collider other)
+    private new void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && _player.health < 3)
         {
-            onHealthPickupObjectTaken?.Invoke();
+            base.OnTriggerEnter(other);
+            OnHealthPickupObjectTaken?.Invoke();
         }
     }
 }

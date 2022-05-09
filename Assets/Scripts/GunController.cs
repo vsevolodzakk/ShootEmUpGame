@@ -22,7 +22,7 @@ public class GunController : MonoBehaviour
 
     private void OnEnable()
     {
-        PickupController.OnPickupTaken += AddAmmo;
+        AmmoPickupObject.OnAmmoPickupObjectTaken += AddAmmo;
     }
 
     private void Start()
@@ -67,6 +67,6 @@ public class GunController : MonoBehaviour
 
     private void OnDisable()
     {
-        PickupController.OnPickupTaken -= AddAmmo;
+        AmmoPickupObject.OnAmmoPickupObjectTaken -= AddAmmo;
     }
 }

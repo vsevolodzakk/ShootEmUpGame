@@ -8,7 +8,7 @@ public class AmmoCounterUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PickupController.OnPickupTaken += CountAmmo;
+        AmmoPickupObject.OnAmmoPickupObjectTaken += CountAmmo;
         GunController.OnGunFire += CountAmmo;
         
         _ammoText = GetComponent<Text>();
@@ -22,7 +22,7 @@ public class AmmoCounterUI : MonoBehaviour
 
     private void OnDisable()
     {
+        AmmoPickupObject.OnAmmoPickupObjectTaken -= CountAmmo;
         GunController.OnGunFire -= CountAmmo;
-        PickupController.OnPickupTaken -= CountAmmo;
     }
 }
