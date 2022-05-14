@@ -379,6 +379,7 @@ Transform:
   - {fileID: 7566594776024484021}
   - {fileID: 1075835234266623975}
   - {fileID: 172718686858342023}
+  - {fileID: 3769710363672876092}
   m_Father: {fileID: 8283149322222264519}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -847,6 +848,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7193136161879594481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3769710363672876092}
+  m_Layer: 0
+  m_Name: HealSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3769710363672876092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7193136161879594481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1731366570814409524}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8283149322222264514
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +1007,7 @@ MonoBehaviour:
   _footSteps: {fileID: 0}
   _playerHitSound: {fileID: 1595167307729195346}
   _playerDeadSound: {fileID: 7906318131291024569}
+  _playerHealSound: {fileID: 0}
   health: 0
   _sceneController: {fileID: 0}
   isAlive: 0
@@ -10961,6 +10993,12 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 73184d0dda381ac4d9da8277b7465597, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317bd1d2b778cf0448b311d615661b6e, type: 3}
+--- !u!4 &8283149321567327390 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400052, guid: 317bd1d2b778cf0448b311d615661b6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8283149321567718954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8283149321567327382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400060, guid: 317bd1d2b778cf0448b311d615661b6e,
@@ -10970,12 +11008,6 @@ Transform:
 --- !u!95 &8283149321560341322 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 317bd1d2b778cf0448b311d615661b6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8283149321567718954}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8283149321567327390 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400052, guid: 317bd1d2b778cf0448b311d615661b6e,
     type: 3}
   m_PrefabInstance: {fileID: 8283149321567718954}
   m_PrefabAsset: {fileID: 0}

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource _footSteps;
     [SerializeField] private AudioSource _playerHitSound;
     [SerializeField] private AudioSource _playerDeadSound;
+    [SerializeField] private AudioSource _playerHealSound;
     
     private bool _isRunning = false;
     
@@ -147,6 +148,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("ADD HEALTH");
             health++;
+            _playerHealSound.Play();
         }
     }
 
