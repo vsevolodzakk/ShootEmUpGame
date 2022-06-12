@@ -11,11 +11,20 @@ public class PowerUpSpawner : MonoBehaviour
         PickupObject.OnPickupObjectTaken += SpawnPickup;
     }
 
+    /// <summary>
+    /// Spawn a pickup
+    /// </summary>
+    /// <param name="takenObject">Pickup type that was taken</param>
     private void SpawnPickup(Transform takenObject)
     {
         takenObject.position = GetSpawnLocation(takenObject.position);
     }
 
+    /// <summary>
+    /// Get powerup spawn location
+    /// </summary>
+    /// <param name="currentPowerupPosition">Current powerup position</param>
+    /// <returns></returns>
     private Vector3 GetSpawnLocation(Vector3 currentPowerupPosition)
     {
         Vector3 newSpawnPosition = currentPowerupPosition;

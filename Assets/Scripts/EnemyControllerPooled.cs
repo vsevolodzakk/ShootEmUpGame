@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -72,13 +71,15 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             _animator.SetBool("isRunning", true);
             _isRunning = true;
         }  
-        else _animator.SetBool("isRunning", false);
+        else 
+            _animator.SetBool("isRunning", false);
 
         // Stop enemy after Player death
         if (_player.gameObject.GetComponent<PlayerController>().isAlive == false)
         {
             _enemy.isStopped = true;
             _isRunning = false;
+
             // Disable animations
             _animator.SetBool("isRunning", false);
         }
@@ -89,8 +90,8 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             if (!_footstepsSound.isPlaying)
                 _footstepsSound.Play();
         }
-        else _footstepsSound.Stop();
-            
+        else 
+            _footstepsSound.Stop();     
     }
     
     private void OnTriggerEnter(Collider other)

@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    [SerializeField] private GameObject _bullet;
+    [SerializeField] private GameObject _bullet; // Bullet prefab reference
 
     public static BulletPool Instance { get; private set; }
 
     private Queue<GameObject> _bullets = new Queue<GameObject>();
 
+    // Singleton
     private void Awake()
     {
         Instance = this;

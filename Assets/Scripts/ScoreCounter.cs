@@ -23,6 +23,10 @@ public class ScoreCounter : MonoBehaviour
         LoadHiScore();
     }
 
+    /// <summary>
+    /// Count score on enemy kill
+    /// </summary>
+    /// <param name="score">Score counter</param>
     private void ScoreKill(int score)
     {
         _killCount += score;
@@ -39,6 +43,9 @@ public class ScoreCounter : MonoBehaviour
         PlayerController.OnPlayerDeath -= CheckHiScore;
     }
 
+    /// <summary>
+    /// Save Hi-Score to PlayerPerf
+    /// </summary>
     private void SaveHiScore()
     {
         _hiScoreText.color = Color.red;
@@ -47,6 +54,9 @@ public class ScoreCounter : MonoBehaviour
         PlayerPrefs.SetInt("HiScore", _killCount);
     }
 
+    /// <summary>
+    /// Get Hi-Score from PlayerPerf
+    /// </summary>
     private void LoadHiScore()
     {
         _hiScore = PlayerPrefs.GetInt("HiScore");
@@ -54,6 +64,9 @@ public class ScoreCounter : MonoBehaviour
         _hiScoreText.color = Color.yellow;
     }
 
+    /// <summary>
+    /// Check if Score greater than Hi-Score
+    /// </summary>
     private void CheckHiScore()
     {
         if (_killCount > _hiScore)

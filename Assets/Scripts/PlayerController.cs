@@ -136,7 +136,6 @@ public class PlayerController : MonoBehaviour
                 health--;
                 _hitMarker.Play();
                 _playerHitSound.Play();
-                Debug.Log("Player HIT!");
                 OnPlayerHit?.Invoke();
             }
         }       
@@ -146,7 +145,6 @@ public class PlayerController : MonoBehaviour
     {
         if(health < 3)
         {
-            Debug.Log("ADD HEALTH");
             health++;
             _playerHealSound.Play();
         }

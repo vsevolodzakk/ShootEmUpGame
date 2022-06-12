@@ -31,6 +31,7 @@ public class EnemyGunController : MonoBehaviour
         _fireTimer += Time.deltaTime;
 
         RaycastHit _hit;
+
         // Fire
         if(_enemy.isDead == false && _sceneController.gameOnPause == false)
         {

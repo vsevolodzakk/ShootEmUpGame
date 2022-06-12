@@ -12,23 +12,12 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        // Set saved user Settings
         _master.SetFloat("MusicVol", PlayerPrefs.GetFloat("MusicVol"));
         _master.SetFloat("FxVol", PlayerPrefs.GetFloat("FxVol"));
 
+        // Get Hi-Score
         _hiScore = PlayerPrefs.GetInt("HiScore");
         _hiScoreText.text = "Hi-Score: " + _hiScore.ToString();
-    }
-
-    public void PlayGame()
-    {
-        // Begin Play
-        Debug.Log("Starting game.");
-    }
-
-    public void QuitGame()
-    {
-        // Quit program
-        Debug.Log("Quit game.");
-        Application.Quit();
     }
 }

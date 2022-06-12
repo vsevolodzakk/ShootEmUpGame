@@ -45,7 +45,9 @@ public class GunController : MonoBehaviour
             _noAmmoSound.Play();
     }   
 
-    // Fire mechanic
+    /// <summary>
+    /// Fire mechanic
+    /// </summary>
     private void Fire()
     {
         var shot = _bulletPool.Get();
@@ -57,6 +59,9 @@ public class GunController : MonoBehaviour
         _shotFiredSound.Play();
     }
 
+    /// <summary>
+    /// Add ammo by event
+    /// </summary>
     private void AddAmmo()
     {
         ammo += _ammoFromPickup;

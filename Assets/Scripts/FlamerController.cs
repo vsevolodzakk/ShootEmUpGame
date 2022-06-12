@@ -20,6 +20,7 @@ public class FlamerController : MonoBehaviour
     {
         _ray = new Ray(transform.position, _player.position);
         RaycastHit _hit;
+
         // Flame player
         if (_enemy.isDead == false)
         {

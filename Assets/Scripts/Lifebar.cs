@@ -14,6 +14,9 @@ public class Lifebar : MonoBehaviour
         HealthPickupObject.OnHealthPickupObjectTaken += AddHp;
     }
 
+    /// <summary>
+    /// Remove 1 HP from Lifebar UI
+    /// </summary>
     private void SubstractHp()
     {
         if(_disableIndex > 0)
@@ -23,6 +26,9 @@ public class Lifebar : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// Add 1 HP to Lifebar UI
+    /// </summary>
     private void AddHp()
     {
         if(_disableIndex < 2)

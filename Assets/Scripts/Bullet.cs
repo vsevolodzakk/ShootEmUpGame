@@ -5,8 +5,8 @@ public class Bullet : MonoBehaviour, IBulletPooled
     [SerializeField] private float _speed = 50f;
     [SerializeField] private float _maxLifetime = 3f;
     
-    private float _lifetime;
-    private BulletPool _bulletPool;
+    private float _lifetime; // Bullet lifetime
+    private BulletPool _bulletPool; // Pool of bullets
 
     public BulletPool Pool
     {
@@ -27,8 +27,10 @@ public class Bullet : MonoBehaviour, IBulletPooled
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * _speed * Time.deltaTime); // Bullet fly
         _lifetime += Time.deltaTime;
+
+        // Return Bullet to Pool after lifetime end
         if (_lifetime > _maxLifetime)
             Pool.ReturnToPool(this.gameObject);
     }
@@ -37,6 +39,7 @@ public class Bullet : MonoBehaviour, IBulletPooled
     {
         if (other.CompareTag("Enemy") || other.CompareTag("Wall") || other.CompareTag("Player"))
         {
+            // Return Bullet to Pool after hit
             Pool.ReturnToPool(this.gameObject);
         }      
     }

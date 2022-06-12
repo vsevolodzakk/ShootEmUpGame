@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,53 +25,79 @@ public class SceneController : MonoBehaviour
     private void OnEnable()
     {
         _scene = SceneManager.GetActiveScene();
+
+        // If MainMenuScene if active play music
         if (_scene.buildIndex == 0)
             _mainMenuMusic.Play();
 
         if(_scene.buildIndex == 1)
-            PlayerController.OnPlayerDeath += GameOverMenu;
+            PlayerController.OnPlayerDeath += GameOverMenu; // Subscribe to OnPlayerDeath event in Gameplay Scene
 
-        Debug.Log(Screen.currentResolution);
+        Debug.Log(Screen.currentResolution); // Debug Info
     }
 
     void Update()
     {
         if (_scene.buildIndex == 1)
         {
+            #region Test feature to clean Hi-Score
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 RestartLevel();
                 PlayerPrefs.SetInt("HiScore", 0);
                 Debug.Log("RECORD CLEAR!");
             }
+            #endregion
 
+            // Pause menu in Gameplay Scene
             if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause == false && _player.isAlive)
                 Pause();
             else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _player.isAlive)
                 Resume();
         }
-
     }
+
+    /// <summary>
+    /// Restart Gameplay Scene
+    /// </summary>
     public void RestartLevel()
     {
         SceneManager.LoadScene(1);
         NormalMode();
     }
 
+    /// <summary>
+    /// Load Main Menu scene
+    /// </summary>
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(0);
     }
+
+
+    /// <summary>
+    /// Quit from Game
+    /// </summary>
     public void QuitFromGame()
     {
+        //SavePlayerDataToFile();
         Application.Quit();
     }
+
+    /// <summary>
+    /// Set Game of Pause
+    /// </summary>
     public void Pause()
     {
         _pauseMenu.SetActive(true);
         _pauseSound.Play();
         SlowMode();
     }
+
+
+    /// <summary>
+    /// Set Game to play state
+    /// </summary>
     public void Resume()
     {
         _pauseMenu.SetActive(false);
@@ -78,18 +105,29 @@ public class SceneController : MonoBehaviour
         NormalMode();
     }
 
+    /// <summary>
+    /// Set Pause state and GameOver screen
+    /// </summary>
     public void GameOverMenu()
     {
         _gameOverScreen.SetActive(true);
         _gameOverMusic.Play();
         SlowMode();
     }
+
+    /// <summary>
+    /// Set Normal speed of the Game
+    /// </summary>
     private void NormalMode()
     {
         Cursor.visible = false;
         gameOnPause = false;
         Time.timeScale = 1f;
     }
+
+    /// <summary>
+    /// Set Slow speed of the Game
+    /// </summary>
     private void SlowMode()
     {
         Cursor.visible = true;
@@ -102,15 +140,24 @@ public class SceneController : MonoBehaviour
         PlayerController.OnPlayerDeath -= GameOverMenu;
     }
 
+    /// <summary>
+    /// Load Gameplay scene
+    /// </summary>
+    /// <param name="scneneIndex"></param>
     public void LoadLevel(int scneneIndex)
     {
-        StartCoroutine(LoadInBAckbround(scneneIndex));
+        StartCoroutine(LoadInBackground(scneneIndex));
         NormalMode();
     }
 
-    IEnumerator LoadInBAckbround(int scheneIndex)
+    /// <summary>
+    /// Async load of scene
+    /// </summary>
+    /// <param name="sceneIndex">Scene ot load</param>
+    /// <returns></returns>
+    IEnumerator LoadInBackground(int sceneIndex)
     {
-        AsyncOperation load = SceneManager.LoadSceneAsync(scheneIndex);
+        AsyncOperation load = SceneManager.LoadSceneAsync(sceneIndex);
 
         _loadingScreen.SetActive(true);
 
@@ -122,6 +169,33 @@ public class SceneController : MonoBehaviour
             Debug.Log(progress.ToString());
 
             yield return null;
+        }
+    }
+
+    // Trying to save player data to file
+    private void SavePlayerDataToFile()
+    {
+        string path = @"Assets\Resources\SomeFile.txt";
+
+        if (!File.Exists(path))
+        {
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.WriteLine(PlayerPrefs.GetInt("HiScore"));
+                sw.WriteLine(PlayerPrefs.GetFloat("FxVol"));
+                sw.WriteLine(PlayerPrefs.GetFloat("MusicVol"));
+            }
+        }
+        else
+        {
+            File.WriteAllText(path, string.Empty);
+
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.WriteLine(PlayerPrefs.GetInt("HiScore"));
+                sw.WriteLine(PlayerPrefs.GetFloat("FxVol"));
+                sw.WriteLine(PlayerPrefs.GetFloat("MusicVol"));
+            }
         }
     }
 }

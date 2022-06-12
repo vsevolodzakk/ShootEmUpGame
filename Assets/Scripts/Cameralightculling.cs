@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Cameralightculling : MonoBehaviour
@@ -8,6 +7,7 @@ public class Cameralightculling : MonoBehaviour
 
     private void OnPreCull()
     {
+        // Culling lights from Minimap Camera
         foreach (Light light in _lights)
             light.enabled = false;
     }

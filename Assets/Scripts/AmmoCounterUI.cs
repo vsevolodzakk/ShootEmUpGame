@@ -15,6 +15,9 @@ public class AmmoCounterUI : MonoBehaviour
         CountAmmo();
     }
 
+    /// <summary>
+    /// Update ammo count on UI
+    /// </summary>
     private void CountAmmo()
     {
         _ammoText.text = "Ammo: " + _gun.ammo.ToString();
