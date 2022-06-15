@@ -740,6 +740,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 351696604}
     m_Modifications:
+    - target: {fileID: 2899076094526823785, guid: f499e69d0e67a2b4dbcf7c2e8ef2fa57,
+        type: 3}
+      propertyPath: _gun
+      value: 
+      objectReference: {fileID: 1679430479}
     - target: {fileID: 5141598217442207453, guid: f499e69d0e67a2b4dbcf7c2e8ef2fa57,
         type: 3}
       propertyPath: m_RootOrder
@@ -2896,7 +2901,7 @@ MonoBehaviour:
   _currentPowerUp: {fileID: 0}
   _powerUps:
   - {fileID: 79869123}
-  - {fileID: 0}
+  - {fileID: 113895300}
 --- !u!1 &357560917
 GameObject:
   m_ObjectHideFlags: 0
