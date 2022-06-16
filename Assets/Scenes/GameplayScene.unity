@@ -813,6 +813,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 113895299}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &113895301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2899076094526823785, guid: f499e69d0e67a2b4dbcf7c2e8ef2fa57,
+    type: 3}
+  m_PrefabInstance: {fileID: 113895299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c01f6cb95b54c4d80a3c4ef04c4e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &116948980
 GameObject:
   m_ObjectHideFlags: 0
@@ -6254,7 +6266,7 @@ MonoBehaviour:
     - {fileID: 544192265}
     - {fileID: 2050563303}
     - {fileID: 1023800968}
-    count: 05000000040000000200000001000000
+    count: 05000000040000000200000002000000
     rate: 1
   _playerPosition: {fileID: 225116893}
   _waveCountdown: {fileID: 1390915721}
@@ -9234,7 +9246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea195eed85a09c4f822dc83a2abdc17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 227886970201072711, guid: e72e7e692323bb241bf30bfa256779b5, type: 3}
 --- !u!4 &1023800969
 Transform:
   m_ObjectHideFlags: 0
@@ -18437,7 +18449,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _ammoBox
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 113895301}
     - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
         type: 3}
       propertyPath: _bulletPool
