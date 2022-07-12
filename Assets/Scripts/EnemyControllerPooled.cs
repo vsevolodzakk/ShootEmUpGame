@@ -4,6 +4,33 @@ using UnityEngine.AI;
 
 public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 {
+    [SerializeField] private NavMeshAgent _enemy;
+
+    public Transform playerPosition;
+    [SerializeField] private ParticleSystem _ps;
+    
+    [SerializeField] private AudioSource _takeHitSound;
+    [SerializeField] private AudioSource _footstepsSound;
+    [SerializeField] private AudioSource _diesSound;
+    [SerializeField] private AudioSource _knifeAttackSound;
+
+    private int _enemyHp;
+
+    private float _spawningSpeed;
+    private Animator _animator;
+    private bool _isRunning;
+
+    private HealthComponent _enemyHealth;
+
+    [SerializeField] private int _scorePoints;
+
+    // Enemy Death Event
+    public delegate void EnemyDeath(int score);
+    public static event EnemyDeath OnEnemyDies;
+
+    //public AnimatorClipInfo[] clipInfo; 
+    //private float _waitTime;
+
     // EnemyPool reference
     private ObjectPool _pool;
     public ObjectPool Pool
@@ -18,102 +45,86 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         }
     }
 
-    [SerializeField] private NavMeshAgent _enemy;
-    [SerializeField] private Transform _player;
-    [SerializeField] private ParticleSystem _ps;
-    
-    [SerializeField] private AudioSource _takeHitSound;
-    [SerializeField] private AudioSource _footstepsSound;
-    [SerializeField] private AudioSource _diesSound;
-    [SerializeField] private AudioSource _knifeAttackSound;
- 
-    private float _spawningHp;
-    private float _spawningSpeed;
-    private Animator _animator;
-    private bool _isRunning;
-
-    [SerializeField] private float hp;
-    public bool isDead;
-
-    [SerializeField] private int scorePoints;
-
-    // Enemy Death Event
-    public delegate void EnemyDeath(int score);
-    public static event EnemyDeath OnEnemyDies;
-
-    //public AnimatorClipInfo[] clipInfo; 
-    private float _waitTime;
-
     private void OnEnable()
     {
-        isDead = false;
         _isRunning = false;
     }
 
     private void Start()
     {
         _enemy = GetComponent<NavMeshAgent>();
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
         _animator = GetComponent<Animator>();
 
-        _spawningHp = hp;
-        _spawningSpeed = _enemy.speed;   
+        _enemyHealth = GetComponent<HealthComponent>();
+
+        _spawningSpeed = _enemy.speed;
     }
 
     private void Update()
     {
-        // Move Enemy to Player position
-        _enemy.SetDestination(_player.position);
-
-        // Run Animation
-        if (_enemy.speed != 0) 
+        if (_enemyHealth.isAlive)
         {
-            _animator.SetBool("isRunning", true);
-            _isRunning = true;
-        }  
-        else 
-            _animator.SetBool("isRunning", false);
+            // Move Enemy to Player position
+            _enemy.SetDestination(playerPosition.position);
 
-        // Stop enemy after Player death
-        if (_player.gameObject.GetComponent<PlayerController>().isAlive == false)
-        {
-            _enemy.isStopped = true;
-            _isRunning = false;
+            // Run Animation
+            if (_enemy.speed != 0)
+            {
+                _animator.SetBool("isRunning", true);
+                _isRunning = true;
+            }
+            else
+            {
+                _animator.SetBool("isRunning", false);
+            }
 
-            // Disable animations
-            _animator.SetBool("isRunning", false);
+            // Stop enemy after Player death
+            if (playerPosition.gameObject.GetComponent<HealthComponent>().isAlive == false)
+            {
+                _enemy.isStopped = true;
+                _isRunning = false;
+
+                // Disable animations
+                _animator.SetBool("isRunning", false);
+            }
+
+            // Enemy steps sound
+            if (_isRunning)
+            {
+                if (!_footstepsSound.isPlaying)
+                    _footstepsSound.Play();
+            }
+            else
+            {
+                _footstepsSound.Stop();
+            }
         }
-
-        // Enemy steps sound
-        if (_isRunning)
-        {
-            if (!_footstepsSound.isPlaying)
-                _footstepsSound.Play();
-        }
-        else 
-            _footstepsSound.Stop();     
     }
     
     private void OnTriggerEnter(Collider other)
     {
         // If bullet hits Enemy
-        if (other.CompareTag("Bullet") && !isDead)
+        if (other.CompareTag("Bullet") & _enemyHealth.isAlive)
         {
             StopAllCoroutines();
-            if(hp == 1)
+
+            // Логика получения урона через свойство Health
+
+            _enemyHp = GetComponent<HealthComponent>().Health;
+            if (_enemyHp == 1)
             {
                 // Enemy Death
-                isDead = true;
+
+                Debug.Log("DEAD!");
                 StartCoroutine(EnemyDies());
                 if (OnEnemyDies != null)
-                    OnEnemyDies(scorePoints);
+                    OnEnemyDies(_scorePoints);
                 _diesSound.Play();
             }
             else
             {
                 // If there is still HP left, hit Enemy
-                hp--;
-                
+
                 StartCoroutine(EnemyTakeHit());
                 _enemy.speed = _spawningSpeed * 0.7f;
                 _takeHitSound.Play();
@@ -124,10 +135,28 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         }
        
         // Melee Attack of the Enemy
-        if(other.CompareTag("Player") && !isDead)
+        if(other.CompareTag("Player") && _enemyHealth.isAlive)
         {
             StartCoroutine(EnemyMeleeAttacks());
         }
+    }
+
+    private void MakeEnemyDead()
+    {
+        // Разобраться, почему событие срабатывает 2 раза?
+
+        //if (!_enemyHealth.isAlive && _inGame)
+        //{
+        //    StopAllCoroutines();
+
+        //    Debug.Log("DEAD!");
+
+        //    _diesSound.Play();
+        //    StartCoroutine(EnemyDies());
+
+        //    if (OnEnemyDies != null)
+        //        OnEnemyDies(_scorePoints);    
+        //}
     }
 
     private IEnumerator EnemyTakeHit()
@@ -138,8 +167,8 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         
         Debug.Log("HIT!");
         
-        yield return new WaitForSeconds(1f);
-        
+        yield return new WaitForSeconds(1f); // Magic number?
+
         _enemy.isStopped = false;
         Debug.Log("Recover!");
     }
@@ -148,12 +177,12 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
     {
         _enemy.isStopped = true;
         _animator.SetTrigger("gotDead");
-        yield return new WaitForSeconds(1.6f);
 
-        hp = _spawningHp;
+        yield return new WaitForSeconds(1.6f); // Magic number?
+
         _enemy.speed = _spawningSpeed;
         
-        Pool.ReturnToPool(this.gameObject);  
+        Pool.ReturnToPool(this.gameObject);
     }
 
     private IEnumerator EnemyMeleeAttacks()
@@ -162,7 +191,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         _animator.SetTrigger("onAttack");
         if(_knifeAttackSound.clip != null)
             _knifeAttackSound.Play();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); // Magic number?
         _enemy.isStopped = false;
     }
 

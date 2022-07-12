@@ -893,6 +893,7 @@ GameObject:
   - component: {fileID: 8283149322222264516}
   - component: {fileID: 8283149322222264517}
   - component: {fileID: 8283149322222264512}
+  - component: {fileID: 9077788017151019604}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1008,9 +1009,7 @@ MonoBehaviour:
   _playerHitSound: {fileID: 1595167307729195346}
   _playerDeadSound: {fileID: 7906318131291024569}
   _playerHealSound: {fileID: 0}
-  health: 0
   _sceneController: {fileID: 0}
-  isAlive: 0
   _pointer: {fileID: 0}
   _gun: {fileID: 0}
 --- !u!54 &8283149322222264517
@@ -1042,6 +1041,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9077788017151019604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283149322222264514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea219b7439495dd4e8419263b44ed74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnHealth: 3
+  _health: 0
+  isAlive: 0
 --- !u!1 &8283149322371703481
 GameObject:
   m_ObjectHideFlags: 0
@@ -5842,7 +5856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPool: {fileID: 0}
-  _player: {fileID: 8283149322222264516}
+  _playerHealth: {fileID: 0}
   _muzzleFlash: {fileID: 8283149322371703484}
   _sceneController: {fileID: 0}
   ammo: 50
@@ -10993,6 +11007,12 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 73184d0dda381ac4d9da8277b7465597, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317bd1d2b778cf0448b311d615661b6e, type: 3}
+--- !u!95 &8283149321560341322 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 317bd1d2b778cf0448b311d615661b6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8283149321567718954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8283149321567327390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400052, guid: 317bd1d2b778cf0448b311d615661b6e,
@@ -11002,12 +11022,6 @@ Transform:
 --- !u!4 &8283149321567327382 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400060, guid: 317bd1d2b778cf0448b311d615661b6e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8283149321567718954}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8283149321560341322 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 317bd1d2b778cf0448b311d615661b6e,
     type: 3}
   m_PrefabInstance: {fileID: 8283149321567718954}
   m_PrefabAsset: {fileID: 0}

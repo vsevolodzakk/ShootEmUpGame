@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1142499293966430753}
   - component: {fileID: 578146898813491455}
   - component: {fileID: 8873048508723473465}
+  - component: {fileID: 4856524863042291667}
   m_Layer: 0
   m_Name: EnemyBoss
   m_TagString: Enemy
@@ -175,15 +176,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
-  _player: {fileID: 0}
+  playerPosition: {fileID: 0}
   _ps: {fileID: 6333800019557598976}
   _takeHitSound: {fileID: 4553447891715635662}
   _footstepsSound: {fileID: 5531008639137801412}
   _diesSound: {fileID: 4833367931471570707}
   _knifeAttackSound: {fileID: 0}
-  hp: 6
-  isDead: 0
-  scorePoints: 100
+  _scorePoints: 100
 --- !u!114 &8873048508723473465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,10 +198,26 @@ MonoBehaviour:
   _gun: {fileID: 8862657173546292287}
   _bulletPool: {fileID: 0}
   _enemy: {fileID: 0}
+  _enemyHealth: {fileID: 4856524863042291667}
   _burstFireMode: 1
   _sceneController: {fileID: 7732469076994085977, guid: 5c8d754be8d5340498e9c012d9c0b585,
     type: 3}
   _shotFiredSound: {fileID: 4590879595768590389}
+--- !u!114 &4856524863042291667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227886970201072711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea219b7439495dd4e8419263b44ed74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnHealth: 6
+  _health: 0
+  isAlive: 0
 --- !u!1 &1437046246660000505
 GameObject:
   m_ObjectHideFlags: 0

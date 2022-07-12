@@ -15,9 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource _playerDeadSound;
     [SerializeField] private AudioSource _playerHealSound;
     
-    private bool _isRunning = false;
-    
-    public int health;
+    private bool _isRunning;
 
     private CharacterController _player;
     [SerializeField] private SceneController _sceneController;
@@ -28,7 +26,8 @@ public class PlayerController : MonoBehaviour
 
     private float _startingPositionY;
 
-    public bool isAlive;
+    private HealthComponent _playerHealth;
+
     [SerializeField] private GameObject _pointer;
     [SerializeField] private GunController _gun;
 
@@ -40,16 +39,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        HealthPickupObject.OnHealthPickupObjectTaken += AddHealth;
+        HealthComponent.OnCharacterDeath += MakePlayerDead;
+
+        HealthPickupObject.OnHealthPickupObjectTaken += PlayHealSound;
     }
 
     private void Start()
     {
         _player = GetComponent<CharacterController>();
-        isAlive = true;
-        health = 3;
+        _playerHealth = GetComponent<HealthComponent>();
 
         _startingPositionY = transform.position.y;
+        _isRunning = false;
     }
 
     private void Update()
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
         // Movement Vector
         _movement = new Vector3(_h, 0f, _v);
 
-        if (isAlive && _sceneController.gameOnPause == false)
+        if (_playerHealth.isAlive && _sceneController.gameOnPause == false)
         {
             AimTowardMouse();
             _isRunning = false;
@@ -87,15 +88,6 @@ public class PlayerController : MonoBehaviour
             if (transform.position.y > _startingPositionY)
                 transform.position = new Vector3(transform.position.x, _startingPositionY, transform.position.z) ;
 
-            // Death Event
-            if (health == 0)
-            {
-                isAlive = false;
-                _playerDeadSound.Play();
-                _animator.SetTrigger("gotDead");
-                OnPlayerDeath?.Invoke();
-            }
-
             // Footstep Audio
             if (_isRunning) 
             {
@@ -103,7 +95,20 @@ public class PlayerController : MonoBehaviour
                     _footSteps.Play();
             }    
             else _footSteps.Stop();
-        }  
+        }
+    }
+
+    /// <summary>
+    /// Death Event
+    /// </summary>
+    private void MakePlayerDead()
+    {
+        if (!_playerHealth.isAlive)
+        {
+            _animator.SetTrigger("gotDead");
+            _playerDeadSound.Play();
+            OnPlayerDeath?.Invoke();
+        }
     }
 
     private void AimTowardMouse()
@@ -121,37 +126,31 @@ public class PlayerController : MonoBehaviour
 
         if (raycastHit.point != _player.transform.position)
             _pointer.transform.position = new Vector3(raycastHit.point.x, 0.7f, raycastHit.point.z);
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(isAlive == true)
+        if (_playerHealth.isAlive)
         {
-            // Hit by Enemy event shooting
-            if (other.CompareTag("Enemy") && health > 0
-                && !other.gameObject.GetComponent<EnemyControllerPooled>().isDead 
-                    || other.CompareTag("EnemyBullet"))
+            // Hit by Enemy event
+            if (other.CompareTag("EnemyBullet"))
             {
-                health--;
                 _hitMarker.Play();
                 _playerHitSound.Play();
                 OnPlayerHit?.Invoke();
             }
-        }       
+        }
     }
 
-    private void AddHealth()
+    private void PlayHealSound()
     {
-        if(health < 3)
-        {
-            health++;
-            _playerHealSound.Play();
-        }
+        _playerHealSound.Play();
     }
 
     private void OnDisable()
     {
-        HealthPickupObject.OnHealthPickupObjectTaken -= AddHealth;
+        HealthComponent.OnCharacterDeath += MakePlayerDead;
+
+        HealthPickupObject.OnHealthPickupObjectTaken -= PlayHealSound;
     }
 }

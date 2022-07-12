@@ -7,7 +7,7 @@ public class PickupObject: MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.GetComponent<PlayerController>() != null)
         {
             // Pickable method
             OnPickupObjectTaken?.Invoke(gameObject.transform);

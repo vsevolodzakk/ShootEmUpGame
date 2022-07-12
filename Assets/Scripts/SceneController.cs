@@ -13,6 +13,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private Slider _loadingSlider;
 
     [SerializeField] private PlayerController _player;
+    [SerializeField] private HealthComponent _playerHealth;
 
     [SerializeField] private AudioSource _mainMenuMusic;
     [SerializeField] private AudioSource _gameOverMusic;
@@ -50,9 +51,9 @@ public class SceneController : MonoBehaviour
             #endregion
 
             // Pause menu in Gameplay Scene
-            if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause == false && _player.isAlive)
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameOnPause && _playerHealth.isAlive)
                 Pause();
-            else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _player.isAlive)
+            else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _playerHealth.isAlive)
                 Resume();
         }
     }
@@ -73,7 +74,6 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
 
     /// <summary>
     /// Quit from Game
@@ -151,7 +151,7 @@ public class SceneController : MonoBehaviour
     }
 
     /// <summary>
-    /// Async load of scene
+    /// Async load of the scene
     /// </summary>
     /// <param name="sceneIndex">Scene ot load</param>
     /// <returns></returns>

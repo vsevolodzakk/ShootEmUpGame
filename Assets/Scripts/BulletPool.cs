@@ -5,9 +5,8 @@ public class BulletPool : MonoBehaviour
 {
     [SerializeField] private GameObject _bullet; // Bullet prefab reference
 
-    public static BulletPool Instance { get; private set; }
-
     private Queue<GameObject> _bullets = new Queue<GameObject>();
+    public static BulletPool Instance { get; private set; }
 
     // Singleton
     private void Awake()
@@ -15,7 +14,10 @@ public class BulletPool : MonoBehaviour
         Instance = this;
     }
 
-    // Get bullet from BulletPool
+    /// <summary>
+    /// Get bullet from BulletPool
+    /// </summary>
+    /// <returns></returns>
     public GameObject Get()
     {
         if (_bullets.Count == 0 && _bullets.Count <= 5)
@@ -23,14 +25,20 @@ public class BulletPool : MonoBehaviour
         return _bullets.Dequeue();
     }
 
-    // Return Bullet to Pool
+    /// <summary>
+    /// Return Bullet to Pool
+    /// </summary>
+    /// <param name="bulletToReturn">Refrence to Bullet to return</param>
     public void ReturnToPool(GameObject bulletToReturn)
     {
         bulletToReturn.SetActive(false);
         _bullets.Enqueue(bulletToReturn);
     }
 
-    // Add Bullet to Pool
+    /// <summary>
+    /// Add Bullet to Pool
+    /// </summary>
+    /// <param name="count">Nubmer of Bullets to Add</param>
     private void AddBullet(int count)
     {
         GameObject newBullet = GameObject.Instantiate(_bullet);

@@ -6,8 +6,9 @@ public class ObjectPool : MonoBehaviour
     // Object prefab
     [SerializeField] private GameObject _prefab;
 
-    public static ObjectPool Instance { get; private set; }
     private Queue<GameObject> _objects = new Queue<GameObject>();
+
+    public static ObjectPool Instance { get; private set; }
 
     // Singleton
     private void Awake()
@@ -15,7 +16,10 @@ public class ObjectPool : MonoBehaviour
         Instance = this;
     }
 
-    // Get Object from Pool
+    /// <summary>
+    /// Get Object from Pool
+    /// </summary>
+    /// <returns></returns>
     public GameObject Get()
     {
         if (_objects.Count == 0)
@@ -23,14 +27,20 @@ public class ObjectPool : MonoBehaviour
         return _objects.Dequeue();
     }
 
-    // Return Object to Pool
+    /// <summary>
+    /// Return Object to Pool
+    /// </summary>
+    /// <param name="objectToReturn"></param>
     public void ReturnToPool(GameObject objectToReturn)
     {
         objectToReturn.SetActive(false);
         _objects.Enqueue(objectToReturn);
     }
 
-    // Add more Object instances to Pool
+    /// <summary>
+    /// Add more Object instances to Pool
+    /// </summary>
+    /// <param name="count"></param>
     private void AddObjects(int count)
     {
         var _newObject = GameObject.Instantiate(_prefab);

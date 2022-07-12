@@ -4,10 +4,10 @@ public class AmmoPickupObject : PickupObject
 {
     public int ammoInBox = 50;
 
+    [SerializeField] private GunController _gun;
+
     public delegate void AmmoPickupObjectTaken();
     public static event AmmoPickupObjectTaken OnAmmoPickupObjectTaken;
-
-    [SerializeField] private GunController _gun;
 
     private new void OnTriggerEnter(Collider other)
     {

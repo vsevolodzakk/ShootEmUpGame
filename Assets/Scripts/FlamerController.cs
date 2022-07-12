@@ -3,17 +3,17 @@
 public class FlamerController : MonoBehaviour
 {
     private Transform _player;
-    private EnemyControllerPooled _enemy;
+    private HealthComponent _enemyHealth;
+    private Ray _ray;
+
     [SerializeField] private ParticleSystem _firePs;
     [SerializeField] private SceneController _sceneController;
     [SerializeField] private AudioSource _flamerSound;
 
-    private Ray _ray;
-
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
-        _enemy = GetComponent<EnemyControllerPooled>(); 
+        _player = GetComponentInParent<EnemyControllerPooled>().playerPosition;
+        _enemyHealth = GetComponent<HealthComponent>(); 
     }
 
     void Update()
@@ -22,7 +22,7 @@ public class FlamerController : MonoBehaviour
         RaycastHit _hit;
 
         // Flame player
-        if (_enemy.isDead == false)
+        if (_enemyHealth.isAlive)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9))
             {

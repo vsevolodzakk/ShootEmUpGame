@@ -8,13 +8,13 @@ public class Cameralightculling : MonoBehaviour
     private void OnPreCull()
     {
         // Culling lights from Minimap Camera
-        foreach (Light light in _lights)
-            light.enabled = false;
+        for(int i = 0; i < _lights.Count; i++)
+            _lights[i].enabled = false;
     }
 
     private void OnPostRender()
     {
-        foreach (Light light in _lights)
-            light.enabled = true;
+        for(int i = 0; i < _lights.Count; i++)
+            _lights[i].enabled = true;
     }
 }

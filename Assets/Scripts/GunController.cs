@@ -3,7 +3,7 @@
 public class GunController : MonoBehaviour
 {
     [SerializeField] private BulletPool _bulletPool;
-    [SerializeField] private PlayerController _player;
+    [SerializeField] private HealthComponent _playerHealth;
     [SerializeField] private ParticleSystem _muzzleFlash;
 
     [SerializeField] private SceneController _sceneController;
@@ -34,14 +34,14 @@ public class GunController : MonoBehaviour
     {
         // Player gun fire conditions
         if (Input.GetButtonDown("Fire1")
-                && _player.isAlive && ammo > 0
+                && _playerHealth.isAlive && ammo > 0
                     && _sceneController.gameOnPause == false)
         {
             Fire();
             _muzzleFlash.Play();
         }
         else if (Input.GetButtonDown("Fire1")
-                && _player.isAlive && ammo == 0)
+                && _playerHealth.isAlive && ammo == 0)
             _noAmmoSound.Play();
     }   
 

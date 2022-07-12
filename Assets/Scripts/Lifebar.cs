@@ -4,8 +4,6 @@ public class Lifebar : MonoBehaviour
 {
     [SerializeField] private GameObject[] lifebarArray;
 
-    [SerializeField] private PlayerController player;
-
     [SerializeField] private int _disableIndex;
 
     private void OnEnable()

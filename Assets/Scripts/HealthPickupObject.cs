@@ -9,7 +9,7 @@ public class HealthPickupObject : PickupObject
 
     private new void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && _player.health < 3)
+        if (other.GetComponent<PlayerController>() != null)
         {
             base.OnTriggerEnter(other);
             OnHealthPickupObjectTaken?.Invoke();

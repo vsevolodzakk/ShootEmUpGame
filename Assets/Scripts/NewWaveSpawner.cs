@@ -22,10 +22,6 @@ public class NewWaveSpawner : MonoBehaviour
         COUNTING
     }
 
-    // Event of new wave countdown
-    public delegate void NewWaveCountdownStarted();
-    public static event NewWaveCountdownStarted onCountdownStart;
-
     // Wave container
     public NewWave[] newWaves;
     private int _nextWave = 0;
@@ -42,8 +38,11 @@ public class NewWaveSpawner : MonoBehaviour
     [SerializeField] private Transform _playerPosition;
 
     [SerializeField] private Text _waveCountdown;
-
     [SerializeField] private GameObject _waveClearMessage;
+
+    // Event of new wave countdown
+    public delegate void NewWaveCountdownStarted();
+    public static event NewWaveCountdownStarted onCountdownStart;
 
     void Start()
     {
@@ -97,7 +96,10 @@ public class NewWaveSpawner : MonoBehaviour
         return center + new Vector3(Mathf.Cos(_angle), 0, Mathf.Sin(_angle)) * radius;
     }
 
-    // Check is active enemy left
+    /// <summary>
+    /// Check is alive Enemy left
+    /// </summary>
+    /// <returns></returns>
     private bool EnemyIsAlive()
     {
         _newSearchCountdown -= Time.deltaTime;
@@ -140,7 +142,7 @@ public class NewWaveSpawner : MonoBehaviour
         _state = SpawnState.SPAWNING;
         for (int i = 0; i < wave.enemyPools.Length; i++)
         {
-            StartCoroutine(SpawnEnemy(wave.enemyPools[i], wave.count[i], wave.rate));
+            StartCoroutine(SpawnEnemy(wave.enemyPools[i], wave.count[i], wave.rate, _playerPosition));
             yield return new WaitForSeconds(wave.rate);
         }
         _state = SpawnState.WAITING;
@@ -155,14 +157,17 @@ public class NewWaveSpawner : MonoBehaviour
     /// <param name="count">Count of enemy type</param>
     /// <param name="rate">Spawn rate of the enemy</param>
     /// <returns></returns>
-    IEnumerator SpawnEnemy(ObjectPool enemy, int count, float rate)
+    IEnumerator SpawnEnemy(ObjectPool enemy, int count, float rate, Transform playerPosition)
     {
         for(int i = 0; i < count; i++)
         {
             var _newEnemy = enemy.Get(); // Get Enemy from Pool
             _newEnemy.transform.rotation = transform.rotation; // Set Enemy position and rotation
             _newEnemy.transform.position = new Vector3(_spawnPosition.x, 1f, _spawnPosition.z);
+            _newEnemy.GetComponent<EnemyControllerPooled>().playerPosition = playerPosition;
+
             _newEnemy.SetActive(true);
+                       
             yield return new WaitForSeconds(rate);
         }
     }

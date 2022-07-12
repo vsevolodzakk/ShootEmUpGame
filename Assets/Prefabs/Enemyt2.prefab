@@ -5230,6 +5230,7 @@ GameObject:
   - component: {fileID: 6771360533627097852}
   - component: {fileID: 2724658830306011245}
   - component: {fileID: 9156134074363880711}
+  - component: {fileID: 4174589062329200650}
   m_Layer: 0
   m_Name: Enemyt2
   m_TagString: Enemy
@@ -5372,15 +5373,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
-  _player: {fileID: 0}
+  playerPosition: {fileID: 0}
   _ps: {fileID: 151825524960988419}
   _takeHitSound: {fileID: 7926797622986889425}
   _footstepsSound: {fileID: 9205409428559152887}
   _diesSound: {fileID: 5135937905519737488}
   _knifeAttackSound: {fileID: 6834272651344960654}
-  hp: 2
-  isDead: 0
-  scorePoints: 20
+  _scorePoints: 25
 --- !u!114 &2724658830306011245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5396,6 +5395,7 @@ MonoBehaviour:
   _gun: {fileID: 6725996116544673048}
   _bulletPool: {fileID: 0}
   _enemy: {fileID: 0}
+  _enemyHealth: {fileID: 4174589062329200650}
   _burstFireMode: 0
   _sceneController: {fileID: 7732469076994085977, guid: 5c8d754be8d5340498e9c012d9c0b585,
     type: 3}
@@ -5419,6 +5419,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4174589062329200650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256859909933149764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea219b7439495dd4e8419263b44ed74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnHealth: 2
+  _health: 0
+  isAlive: 0
 --- !u!1 &6309807175242250712
 GameObject:
   m_ObjectHideFlags: 0

@@ -13353,6 +13353,7 @@ GameObject:
   - component: {fileID: 5805608980306590889}
   - component: {fileID: 6610662946500378643}
   - component: {fileID: 8248344303198505810}
+  - component: {fileID: 8855507024853792865}
   m_Layer: 0
   m_Name: Enemyt3
   m_TagString: Enemy
@@ -13492,15 +13493,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
-  _player: {fileID: 0}
+  playerPosition: {fileID: 0}
   _ps: {fileID: 1113086878685307734}
   _takeHitSound: {fileID: 5453429120594408914}
   _footstepsSound: {fileID: 4426504535971026261}
   _diesSound: {fileID: 4788279490485452690}
   _knifeAttackSound: {fileID: 0}
-  hp: 3
-  isDead: 0
-  scorePoints: 50
+  _scorePoints: 50
 --- !u!114 &6610662946500378643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13536,6 +13535,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8855507024853792865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610662946500378641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea219b7439495dd4e8419263b44ed74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnHealth: 3
+  _health: 0
+  isAlive: 0
 --- !u!1 &7765929285063836135
 GameObject:
   m_ObjectHideFlags: 0

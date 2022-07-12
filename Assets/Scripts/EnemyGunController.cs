@@ -5,7 +5,7 @@ public class EnemyGunController : MonoBehaviour
 {
     [SerializeField] private Transform _gun;
     [SerializeField] private BulletPool _bulletPool;
-    [SerializeField] private EnemyControllerPooled _enemy;
+    [SerializeField] private HealthComponent _enemyHealth;
     [SerializeField] private bool _burstFireMode;
     [SerializeField] private SceneController _sceneController;
 
@@ -21,7 +21,7 @@ public class EnemyGunController : MonoBehaviour
     {
         _bulletPool = GameObject.Find("EnemyBulletPool").GetComponent<BulletPool>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        _enemy = GetComponent<EnemyControllerPooled>();
+        _enemyHealth = GetComponent<HealthComponent>();
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class EnemyGunController : MonoBehaviour
         RaycastHit _hit;
 
         // Fire
-        if(_enemy.isDead == false && _sceneController.gameOnPause == false)
+        if(_enemyHealth.isAlive && _sceneController.gameOnPause == false)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9)
                 && _fireTimer >= (1 / _fireRate) + Random.Range(0f,1f))
@@ -41,15 +41,20 @@ public class EnemyGunController : MonoBehaviour
                 if (_burstFireMode)
                 {
                     StartCoroutine(HeavyGunFire());  
-                } else
+                }
+                else
+                {
                     EnemyFire();
+                }
 
                 _fireTimer = 0f;
             }
         }  
     }
 
-    // Single fire mode
+    /// <summary>
+    /// Single fire mode
+    /// </summary>
     private void EnemyFire()
     {
         var _bullet = _bulletPool.Get();
@@ -60,7 +65,7 @@ public class EnemyGunController : MonoBehaviour
         _shotFiredSound.Play();
     }
 
-    // Burst gun mode for Boss (and maybe some ordinary enemy)
+    /// Burst gun mode for Boss (and maybe some ordinary enemy) 
     IEnumerator HeavyGunFire()
     {
         for (int i = 0; i < 5; i++)
