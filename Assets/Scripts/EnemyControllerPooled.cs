@@ -14,8 +14,6 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
     [SerializeField] private AudioSource _diesSound;
     [SerializeField] private AudioSource _knifeAttackSound;
 
-    private int _enemyHp;
-
     private float _spawningSpeed;
     private Animator _animator;
     private bool _isRunning;
@@ -47,7 +45,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     private void OnEnable()
     {
-        _isRunning = false;
+        _isRunning = false;    
     }
 
     private void Start()
@@ -62,7 +60,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     private void Update()
     {
-        if (_enemyHealth.isAlive)
+        if (_enemyHealth.IsAlive)
         {
             // Move Enemy to Player position
             _enemy.SetDestination(playerPosition.position);
@@ -79,7 +77,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             }
 
             // Stop enemy after Player death
-            if (playerPosition.gameObject.GetComponent<HealthComponent>().isAlive == false)
+            if (playerPosition.gameObject.GetComponent<HealthComponent>().IsAlive == false)
             {
                 _enemy.isStopped = true;
                 _isRunning = false;
@@ -99,19 +97,28 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
                 _footstepsSound.Stop();
             }
         }
+        //else if (!_enemyHealth.IsAlive)
+        //{
+        //    // Enemy Death
+
+        //    Debug.Log("DEAD!");
+        //    StartCoroutine(EnemyDies());
+        //    if (OnEnemyDies != null)
+        //        OnEnemyDies(_scorePoints);
+        //    _diesSound.Play();
+        //}
     }
     
     private void OnTriggerEnter(Collider other)
     {
         // If bullet hits Enemy
-        if (other.CompareTag("Bullet") & _enemyHealth.isAlive)
+        if (other.CompareTag("Bullet") & _enemyHealth.IsAlive)
         {
             StopAllCoroutines();
 
             // Логика получения урона через свойство Health
 
-            _enemyHp = GetComponent<HealthComponent>().Health;
-            if (_enemyHp == 1)
+            if (_enemyHealth.Health <= 1)
             {
                 // Enemy Death
 
@@ -132,32 +139,32 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
             // Hit visual effect
             _ps.Play();
-        }
-       
+        } 
+
         // Melee Attack of the Enemy
-        if(other.CompareTag("Player") && _enemyHealth.isAlive)
+        if(other.CompareTag("Player") && _enemyHealth.IsAlive)
         {
             StartCoroutine(EnemyMeleeAttacks());
         }
     }
 
-    private void MakeEnemyDead()
-    {
-        // Разобраться, почему событие срабатывает 2 раза?
+    //private void MakeEnemyDead()
+    //{
+    //    // Разобраться, почему событие срабатывает 2 раза?
 
-        //if (!_enemyHealth.isAlive && _inGame)
-        //{
-        //    StopAllCoroutines();
+    //    if (!_enemyHealth.IsAlive && _inGame)
+    //    {
+    //        StopAllCoroutines();
 
-        //    Debug.Log("DEAD!");
+    //        Debug.Log("DEAD!");
 
-        //    _diesSound.Play();
-        //    StartCoroutine(EnemyDies());
+    //        _diesSound.Play();
+    //        StartCoroutine(EnemyDies());
 
-        //    if (OnEnemyDies != null)
-        //        OnEnemyDies(_scorePoints);    
-        //}
-    }
+    //        if (OnEnemyDies != null)
+    //            OnEnemyDies(_scorePoints);    
+    //    }
+    //}
 
     private IEnumerator EnemyTakeHit()
     {

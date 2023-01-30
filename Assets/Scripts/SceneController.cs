@@ -51,9 +51,9 @@ public class SceneController : MonoBehaviour
             #endregion
 
             // Pause menu in Gameplay Scene
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameOnPause && _playerHealth.isAlive)
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameOnPause && _playerHealth.IsAlive)
                 Pause();
-            else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _playerHealth.isAlive)
+            else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _playerHealth.IsAlive)
                 Resume();
         }
     }

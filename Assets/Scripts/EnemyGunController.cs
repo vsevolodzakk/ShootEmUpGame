@@ -33,7 +33,7 @@ public class EnemyGunController : MonoBehaviour
         RaycastHit _hit;
 
         // Fire
-        if(_enemyHealth.isAlive && _sceneController.gameOnPause == false)
+        if(_enemyHealth.IsAlive && _sceneController.gameOnPause == false)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9)
                 && _fireTimer >= (1 / _fireRate) + Random.Range(0f,1f))

@@ -5,8 +5,9 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private int _spawnHealth;
 
     [SerializeField] private int _health;
+    [SerializeField] private bool _isAlive;
 
-    public bool isAlive;
+    public bool IsAlive => _isAlive;
     public int Health => _health;
 
     public delegate void CharacterDeath();
@@ -16,7 +17,7 @@ public class HealthComponent : MonoBehaviour
     {
         HealthPickupObject.OnHealthPickupObjectTaken += AddHealth;
 
-        isAlive = true;
+        _isAlive = true;
         _health = _spawnHealth;
     }
 
@@ -26,7 +27,7 @@ public class HealthComponent : MonoBehaviour
         if (_health == 0)
         {
             ApplyDamage();
-            isAlive = false;
+            _isAlive = false;
             OnCharacterDeath?.Invoke();
         }
     }
@@ -35,7 +36,7 @@ public class HealthComponent : MonoBehaviour
     {
         _health--;
 
-        // Can be modified to apple some amount of damage
+        // Can be modified to apply some amount of damage
     }
 
     private void AddHealth()
@@ -46,7 +47,7 @@ public class HealthComponent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.GetComponent<Bullet>() != null && gameObject.GetComponent<EnemyControllerPooled>() != null)
+        if ((other.CompareTag("Bullet") && gameObject.GetComponent<EnemyControllerPooled>() != null)
             || (other.CompareTag("EnemyBullet") && gameObject.GetComponent<PlayerController>() != null))
         {
             ApplyDamage();

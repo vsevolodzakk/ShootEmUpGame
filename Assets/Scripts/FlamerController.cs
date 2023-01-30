@@ -22,7 +22,7 @@ public class FlamerController : MonoBehaviour
         RaycastHit _hit;
 
         // Flame player
-        if (_enemyHealth.isAlive)
+        if (_enemyHealth.IsAlive)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9))
             {

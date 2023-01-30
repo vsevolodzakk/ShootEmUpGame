@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         // Movement Vector
         _movement = new Vector3(_h, 0f, _v);
 
-        if (_playerHealth.isAlive && _sceneController.gameOnPause == false)
+        if (_playerHealth.IsAlive && _sceneController.gameOnPause == false)
         {
             AimTowardMouse();
             _isRunning = false;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void MakePlayerDead()
     {
-        if (!_playerHealth.isAlive)
+        if (!_playerHealth.IsAlive)
         {
             _animator.SetTrigger("gotDead");
             _playerDeadSound.Play();
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_playerHealth.isAlive)
+        if (_playerHealth.IsAlive)
         {
             // Hit by Enemy event
             if (other.CompareTag("EnemyBullet"))

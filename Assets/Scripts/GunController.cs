@@ -34,14 +34,14 @@ public class GunController : MonoBehaviour
     {
         // Player gun fire conditions
         if (Input.GetButtonDown("Fire1")
-                && _playerHealth.isAlive && ammo > 0
+                && _playerHealth.IsAlive && ammo > 0
                     && _sceneController.gameOnPause == false)
         {
             Fire();
             _muzzleFlash.Play();
         }
         else if (Input.GetButtonDown("Fire1")
-                && _playerHealth.isAlive && ammo == 0)
+                && _playerHealth.IsAlive && ammo == 0)
             _noAmmoSound.Play();
     }   
 
