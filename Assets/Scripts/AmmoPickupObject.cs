@@ -11,7 +11,7 @@ public class AmmoPickupObject : PickupObject
 
     private new void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && _gun.ammo < 100)
+        if (other.CompareTag("Player") && _gun.Ammo < 100)
         {
             base.OnTriggerEnter(other);
             OnAmmoPickupObjectTaken?.Invoke();

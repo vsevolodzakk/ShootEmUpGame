@@ -45,7 +45,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     private void OnEnable()
     {
-        _isRunning = false;    
+        _isRunning = false;
     }
 
     private void Start()
@@ -60,7 +60,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     private void Update()
     {
-        if (_enemyHealth.IsAlive)
+        if (_enemyHealth.isAlive)
         {
             // Move Enemy to Player position
             _enemy.SetDestination(playerPosition.position);
@@ -77,7 +77,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             }
 
             // Stop enemy after Player death
-            if (playerPosition.gameObject.GetComponent<HealthComponent>().IsAlive == false)
+            if (playerPosition.gameObject.GetComponent<HealthComponent>().isAlive == false)
             {
                 _enemy.isStopped = true;
                 _isRunning = false;
@@ -97,22 +97,12 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
                 _footstepsSound.Stop();
             }
         }
-        //else if (!_enemyHealth.IsAlive)
-        //{
-        //    // Enemy Death
-
-        //    Debug.Log("DEAD!");
-        //    StartCoroutine(EnemyDies());
-        //    if (OnEnemyDies != null)
-        //        OnEnemyDies(_scorePoints);
-        //    _diesSound.Play();
-        //}
     }
     
     private void OnTriggerEnter(Collider other)
     {
         // If bullet hits Enemy
-        if (other.CompareTag("Bullet") & _enemyHealth.IsAlive)
+        if (other.CompareTag("Bullet") & _enemyHealth.isAlive)
         {
             StopAllCoroutines();
 
@@ -124,8 +114,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
                 Debug.Log("DEAD!");
                 StartCoroutine(EnemyDies());
-                if (OnEnemyDies != null)
-                    OnEnemyDies(_scorePoints);
+                OnEnemyDies?.Invoke(_scorePoints);
                 _diesSound.Play();
             }
             else
@@ -139,10 +128,10 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
             // Hit visual effect
             _ps.Play();
-        } 
-
+        }
+       
         // Melee Attack of the Enemy
-        if(other.CompareTag("Player") && _enemyHealth.IsAlive)
+        if(other.CompareTag("Player") && _enemyHealth.isAlive)
         {
             StartCoroutine(EnemyMeleeAttacks());
         }
@@ -150,9 +139,9 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     //private void MakeEnemyDead()
     //{
-    //    // Разобраться, почему событие срабатывает 2 раза?
+    //    Разобраться, почему событие срабатывает 2 раза ?
 
-    //    if (!_enemyHealth.IsAlive && _inGame)
+    //    if (!_enemyHealth.isAlive && _inGame)
     //    {
     //        StopAllCoroutines();
 
@@ -162,7 +151,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
     //        StartCoroutine(EnemyDies());
 
     //        if (OnEnemyDies != null)
-    //            OnEnemyDies(_scorePoints);    
+    //            OnEnemyDies(_scorePoints);
     //    }
     //}
 
@@ -204,11 +193,11 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     // Метод для рассчета времени проигрывания анимации. 
     // есть проблема в неправильном вычислении состояния
-    private float GetClipDuration()
-    {
-        AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
-        //Debug.Log(clipInfo[0].clip.length.ToString());
-        //Debug.Log(clipInfo[0].clip.name);
-        return clipInfo[0].clip.length;
-    }
+    //private float GetClipDuration()
+    //{
+    //    AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
+    //    //Debug.Log(clipInfo[0].clip.length.ToString());
+    //    //Debug.Log(clipInfo[0].clip.name);
+    //    return clipInfo[0].clip.length;
+    //}
 }

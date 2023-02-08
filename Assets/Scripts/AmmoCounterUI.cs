@@ -20,7 +20,7 @@ public class AmmoCounterUI : MonoBehaviour
     /// </summary>
     private void CountAmmo()
     {
-        _ammoText.text = "Ammo: " + _gun.ammo.ToString();
+        _ammoText.text = "Ammo: " + _gun.Ammo.ToString();
     }
 
     private void OnDisable()

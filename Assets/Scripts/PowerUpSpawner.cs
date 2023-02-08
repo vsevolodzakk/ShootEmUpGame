@@ -3,7 +3,6 @@
 public class PowerUpSpawner : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPositions;
-    [SerializeField] private Transform _currentPowerUp;
     [SerializeField] private Transform[] _powerUps;
 
     private void OnEnable()
