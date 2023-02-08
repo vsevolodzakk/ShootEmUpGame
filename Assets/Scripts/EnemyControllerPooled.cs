@@ -60,7 +60,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 
     private void Update()
     {
-        if (_enemyHealth.isAlive)
+        if (_enemyHealth.IsAlive)
         {
             // Move Enemy to Player position
             _enemy.SetDestination(playerPosition.position);
@@ -77,7 +77,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             }
 
             // Stop enemy after Player death
-            if (playerPosition.gameObject.GetComponent<HealthComponent>().isAlive == false)
+            if (playerPosition.gameObject.GetComponent<HealthComponent>().IsAlive == false)
             {
                 _enemy.isStopped = true;
                 _isRunning = false;
@@ -102,7 +102,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
     private void OnTriggerEnter(Collider other)
     {
         // If bullet hits Enemy
-        if (other.CompareTag("Bullet") & _enemyHealth.isAlive)
+        if (other.CompareTag("Bullet") & _enemyHealth.IsAlive)
         {
             StopAllCoroutines();
 
@@ -131,7 +131,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         }
        
         // Melee Attack of the Enemy
-        if(other.CompareTag("Player") && _enemyHealth.isAlive)
+        if(other.CompareTag("Player") && _enemyHealth.IsAlive)
         {
             StartCoroutine(EnemyMeleeAttacks());
         }

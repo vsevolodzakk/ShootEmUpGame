@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 413294862964052404}
   - component: {fileID: 7222937335432875816}
   - component: {fileID: 482612801844846170}
-  - component: {fileID: 169889455215494440}
+  - component: {fileID: 7270236781378572644}
   m_Layer: 0
   m_Name: Pickup
   m_TagString: Pickup
@@ -271,7 +271,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &169889455215494440
+--- !u!114 &7270236781378572644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,9 +280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8593535364322951239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45ff625fa25fce44cb08a2a3cb3548b3, type: 3}
+  m_Script: {fileID: 11500000, guid: a5c01f6cb95b54c4d80a3c4ef04c4e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoInBox: 50
   _gun: {fileID: 0}
 --- !u!1001 &2958272655205549751
 PrefabInstance:

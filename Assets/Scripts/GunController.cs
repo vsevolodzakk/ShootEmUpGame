@@ -8,9 +8,7 @@ public class GunController : MonoBehaviour
 
     [SerializeField] private SceneController _sceneController;
     
-    private int _ammo;
-
-    [SerializeField] private AmmoPickupObject _ammoBox;
+    [SerializeField] private int _ammo;
     [SerializeField] private int _ammoFromPickup;
 
     [SerializeField] private AudioSource _shotFiredSound;
@@ -32,14 +30,14 @@ public class GunController : MonoBehaviour
     {
         // Player gun fire conditions
         if (Input.GetButtonDown("Fire1")
-                && _playerHealth.isAlive && _ammo > 0
+                && _playerHealth.IsAlive && _ammo > 0
                     && _sceneController.gameOnPause == false)
         {
             Fire();
             _muzzleFlash.Play();
         }
         else if (Input.GetButtonDown("Fire1")
-                && _playerHealth.isAlive && _ammo == 0)
+                && _playerHealth.IsAlive && _ammo == 0)
             _noAmmoSound.Play();
     }   
 

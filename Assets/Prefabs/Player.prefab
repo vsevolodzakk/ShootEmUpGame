@@ -1055,7 +1055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnHealth: 3
   _health: 0
-  isAlive: 0
+  _isAlive: 0
 --- !u!1 &8283149322371703481
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,8 +5859,7 @@ MonoBehaviour:
   _playerHealth: {fileID: 0}
   _muzzleFlash: {fileID: 8283149322371703484}
   _sceneController: {fileID: 0}
-  ammo: 50
-  _ammoBox: {fileID: 0}
+  _ammo: 0
   _ammoFromPickup: 50
   _shotFiredSound: {fileID: 0}
   _noAmmoSound: {fileID: 0}
