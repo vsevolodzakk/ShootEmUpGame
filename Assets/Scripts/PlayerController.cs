@@ -1,39 +1,57 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // Player move Speed
     [SerializeField] private float _speed;
+
+    // Camera reference
     [SerializeField] private Camera _mainCamera;
+
+    // Player Aminator reference
     [SerializeField] private Animator _animator;
 
+    // LayerMask for AimTowardsMousePosition
     [SerializeField] private LayerMask _aimLayerMask;
 
+    // VisualFX for hit reaction
     [SerializeField] private ParticleSystem _hitMarker;
 
+    // Player SoundFX
     [SerializeField] private AudioSource _footSteps;
     [SerializeField] private AudioSource _playerHitSound;
     [SerializeField] private AudioSource _playerDeadSound;
     [SerializeField] private AudioSource _playerHealSound;
     
+    // Bool flag of Player running state for Animator
     private bool _isRunning;
 
+    // CharacterController reference
     private CharacterController _player;
+
+    // Scene controller reference
     [SerializeField] private SceneController _sceneController;
 
+    // Movement vector
     private float _h;
     private float _v;
     private Vector3 _movement;
 
+    // Y coordinate for "Jump" bug fix
     private float _startingPositionY;
 
+    // Player Health component reference
     private HealthComponent _playerHealth;
 
+    // Player crossair
     [SerializeField] private GameObject _pointer;
-    [SerializeField] private GunController _gun;
 
+    // Player Death Event
     public delegate void PlayerDeath();
     public static event PlayerDeath OnPlayerDeath;
 
+    // Player Hit event
     public delegate void PlayerHit();
     public static event PlayerHit OnPlayerHit;
 
@@ -53,12 +71,15 @@ public class PlayerController : MonoBehaviour
         _isRunning = false;
     }
 
-    private void Update()
+    private void OnMove(InputValue input)
     {
         // Input
-        _h = Input.GetAxis("Horizontal");
-        _v = Input.GetAxis("Vertical");
+        _h = input.Get<Vector2>().x;
+        _v = input.Get<Vector2>().y;
+    }
 
+    private void Update()
+    {
         // Movement Vector
         _movement = new Vector3(_h, 0f, _v);
 
@@ -111,10 +132,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rotate character towards crossair direction
+    /// </summary>
     private void AimTowardMouse()
     {
         // Look in mouse cursor direction
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, _aimLayerMask))
         {
@@ -128,6 +152,10 @@ public class PlayerController : MonoBehaviour
             _pointer.transform.position = new Vector3(raycastHit.point.x, 0.7f, raycastHit.point.z);
     }
 
+    /// <summary>
+    /// Hit by enemy check
+    /// </summary>
+    /// <param name="other">Hitting Collider</param>
     private void OnTriggerEnter(Collider other)
     {
         if (_playerHealth.IsAlive)
@@ -142,6 +170,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays Heal sound when Health has been restored
+    /// </summary>
     private void PlayHealSound()
     {
         _playerHealSound.Play();
@@ -149,7 +180,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        HealthComponent.OnCharacterDeath += MakePlayerDead;
+        HealthComponent.OnCharacterDeath -= MakePlayerDead;
 
         HealthPickupObject.OnHealthPickupObjectTaken -= PlayHealSound;
     }

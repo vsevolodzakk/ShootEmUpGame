@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class SceneController : MonoBehaviour
 {
@@ -19,13 +20,30 @@ public class SceneController : MonoBehaviour
     [SerializeField] private AudioSource _gameOverMusic;
     [SerializeField] private AudioSource _pauseSound;
 
+    private PlayerInputActions _input;
+
     private Scene _scene;
     
     public bool gameOnPause = false;
-    
+
+    private void Awake()
+    {
+        _input= new PlayerInputActions();
+    }
+
     private void OnEnable()
     {
         _scene = SceneManager.GetActiveScene();
+
+        _input.Player.Pause.Enable();
+        _input.Player.Pause.performed += Pause;
+
+        #region Clear HiScore for dev 
+
+        _input.Player.ClearHiScore.Enable();
+        _input.Player.ClearHiScore.performed += ClearHiScore;
+
+        #endregion
 
         // If MainMenuScene if active play music
         if (_scene.buildIndex == 0)
@@ -37,24 +55,13 @@ public class SceneController : MonoBehaviour
         Debug.Log(Screen.currentResolution); // Debug Info
     }
 
-    void Update()
+    private void ClearHiScore(InputAction.CallbackContext context)
     {
-        if (_scene.buildIndex == 1)
+        if(_scene.buildIndex == 1)
         {
-            #region Test feature to clean Hi-Score
-            if (Input.GetKeyDown(KeyCode.Delete))
-            {
-                RestartLevel();
-                PlayerPrefs.SetInt("HiScore", 0);
-                Debug.Log("RECORD CLEAR!");
-            }
-            #endregion
-
-            // Pause menu in Gameplay Scene
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameOnPause && _playerHealth.IsAlive)
-                Pause();
-            else if (Input.GetKeyDown(KeyCode.Escape) && gameOnPause && _playerHealth.IsAlive)
-                Resume();
+            RestartLevel();
+            PlayerPrefs.SetInt("HiScore", 0);
+            Debug.Log("RECORD CLEAR!");
         }
     }
 
@@ -87,11 +94,19 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// Set Game of Pause
     /// </summary>
-    public void Pause()
+    public void Pause(InputAction.CallbackContext context)
     {
-        _pauseMenu.SetActive(true);
         _pauseSound.Play();
-        SlowMode();
+        if (!gameOnPause && _playerHealth.IsAlive)
+        {
+            _pauseMenu.SetActive(true);
+            SlowMode();
+        } 
+        else
+        {
+            Resume();
+        }
+
     }
 
 
@@ -101,7 +116,6 @@ public class SceneController : MonoBehaviour
     public void Resume()
     {
         _pauseMenu.SetActive(false);
-        _pauseSound.Play();
         NormalMode();
     }
 
@@ -138,6 +152,15 @@ public class SceneController : MonoBehaviour
     private void OnDisable()
     {
         PlayerController.OnPlayerDeath -= GameOverMenu;
+
+        _input.Player.Pause.performed -= Pause;
+        _input.Player.Pause.Disable();
+
+        #region Clear HiScore for dev 
+        _input.Player.ClearHiScore.Enable();
+        _input.Player.ClearHiScore.performed += ClearHiScore;
+        #endregion
+
     }
 
     /// <summary>

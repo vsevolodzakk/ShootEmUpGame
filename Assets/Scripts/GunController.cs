@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GunController : MonoBehaviour
 {
@@ -15,30 +16,60 @@ public class GunController : MonoBehaviour
     [SerializeField] private AudioSource _noAmmoSound;
     [SerializeField] private AudioSource _reloadSound;
 
+    private PlayerInputActions _actions;
+
     public int Ammo => _ammo;
 
     public delegate void GunFire();
     public static event GunFire OnGunFire;
 
+    private void Awake()
+    {
+        _actions = new PlayerInputActions();
+    }
+
     private void OnEnable()
     {
         AmmoPickupObject.OnAmmoPickupObjectTaken += AddAmmo;
+
         _ammo = _ammoFromPickup;
+
+        _actions.Player.Fire.Enable();
+
+        _actions.Player.Fire.performed += Bang;
+    }
+
+    private void Bang(InputAction.CallbackContext context)
+    {
+        // Player gun fire conditions
+        if (_playerHealth.IsAlive && !_sceneController.gameOnPause)
+        {
+            if (_ammo > 0)
+            {
+                Fire();
+                _shotFiredSound.Play();
+                _muzzleFlash.Play();
+
+            }
+            else
+            {
+                _noAmmoSound.Play();
+            }
+        }
     }
 
     void Update()
     {
-        // Player gun fire conditions
-        if (Input.GetButtonDown("Fire1")
-                && _playerHealth.IsAlive && _ammo > 0
-                    && _sceneController.gameOnPause == false)
-        {
-            Fire();
-            _muzzleFlash.Play();
-        }
-        else if (Input.GetButtonDown("Fire1")
-                && _playerHealth.IsAlive && _ammo == 0)
-            _noAmmoSound.Play();
+        //if (Input.GetButtonDown("Fire1")
+        //        && _playerHealth.IsAlive && _ammo > 0
+        //            && _sceneController.gameOnPause == false)
+        //{
+        //    Fire();
+        //    _muzzleFlash.Play();
+        //}
+        //else if (Input.GetButtonDown("Fire1")
+        //        && _playerHealth.IsAlive && _ammo == 0)
+        //    _noAmmoSound.Play();
     }   
 
     /// <summary>
@@ -47,12 +78,13 @@ public class GunController : MonoBehaviour
     private void Fire()
     {
         var shot = _bulletPool.Get();
-        _ammo--;
         shot.transform.rotation = transform.rotation;
         shot.transform.position = transform.position;
         shot.gameObject.SetActive(true);
+
+        _ammo--;
+
         OnGunFire?.Invoke();
-        _shotFiredSound.Play();
     }
 
     /// <summary>
@@ -69,5 +101,8 @@ public class GunController : MonoBehaviour
     private void OnDisable()
     {
         AmmoPickupObject.OnAmmoPickupObjectTaken -= AddAmmo;
+
+        _actions.Player.Fire.Disable();
+        _actions.Player.Fire.performed -= Bang;
     }
 }

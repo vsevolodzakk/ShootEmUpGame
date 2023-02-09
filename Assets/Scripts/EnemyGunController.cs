@@ -4,10 +4,11 @@ using UnityEngine;
 public class EnemyGunController : MonoBehaviour
 {
     [SerializeField] private Transform _gun;
-    [SerializeField] private BulletPool _bulletPool;
-    [SerializeField] private HealthComponent _enemyHealth;
     [SerializeField] private bool _burstFireMode;
     [SerializeField] private SceneController _sceneController;
+
+    private BulletPool _bulletPool;
+    private HealthComponent _enemyHealth;
 
     [SerializeField] private AudioSource _shotFiredSound;
 

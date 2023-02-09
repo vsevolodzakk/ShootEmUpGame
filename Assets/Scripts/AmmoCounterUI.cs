@@ -21,6 +21,7 @@ public class AmmoCounterUI : MonoBehaviour
     private void CountAmmo()
     {
         _ammoText.text = "Ammo: " + _gun.Ammo.ToString();
+        //Debug.Log("COUNT_AMMO");
     }
 
     private void OnDisable()

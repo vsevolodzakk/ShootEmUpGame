@@ -112,7 +112,7 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             {
                 // Enemy Death
 
-                Debug.Log("DEAD!");
+                //Debug.Log("DEAD!");
                 StartCoroutine(EnemyDies());
                 OnEnemyDies?.Invoke(_scorePoints);
                 _diesSound.Play();
@@ -161,12 +161,12 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         _animator.SetBool("isRunning", false);
         _animator.SetTrigger("gotHit");
         
-        Debug.Log("HIT!");
+        //Debug.Log("HIT!");
         
         yield return new WaitForSeconds(1f); // Magic number?
 
         _enemy.isStopped = false;
-        Debug.Log("Recover!");
+        //Debug.Log("Recover!");
     }
 
     private IEnumerator EnemyDies()
