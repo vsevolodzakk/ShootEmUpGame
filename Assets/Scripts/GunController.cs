@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GunController : MonoBehaviour
@@ -8,9 +9,17 @@ public class GunController : MonoBehaviour
     [SerializeField] private ParticleSystem _muzzleFlash;
 
     [SerializeField] private SceneController _sceneController;
-    
+
     [SerializeField] private int _ammo;
     [SerializeField] private int _ammoFromPickup;
+
+    #region Тест режима обойм
+
+    [SerializeField] private int _stockClipAmmo;
+    [SerializeField] private int _clipAmmo;
+    [SerializeField] private int _numberOfClips;
+
+    #endregion
 
     [SerializeField] private AudioSource _shotFiredSound;
     [SerializeField] private AudioSource _noAmmoSound;
@@ -19,6 +28,9 @@ public class GunController : MonoBehaviour
     private PlayerInputActions _actions;
 
     public int Ammo => _ammo;
+
+    public int ClipAmmo => _clipAmmo;
+    public int NumberOfClips => _numberOfClips;
 
     public delegate void GunFire();
     public static event GunFire OnGunFire;
@@ -32,11 +44,17 @@ public class GunController : MonoBehaviour
     {
         AmmoPickupObject.OnAmmoPickupObjectTaken += AddAmmo;
 
-        _ammo = _ammoFromPickup;
+        _clipAmmo = _stockClipAmmo;
+        _ammo = _clipAmmo + (_numberOfClips - 1) * _stockClipAmmo;
 
         _actions.Player.Fire.Enable();
 
         _actions.Player.Fire.performed += Bang;
+    }
+
+    private void Update()
+    {
+        _ammo = _clipAmmo + _numberOfClips * _stockClipAmmo;
     }
 
     private void Bang(InputAction.CallbackContext context)
@@ -44,12 +62,16 @@ public class GunController : MonoBehaviour
         // Player gun fire conditions
         if (_playerHealth.IsAlive && !_sceneController.gameOnPause)
         {
-            if (_ammo > 0)
+            if (_clipAmmo > 0 && _numberOfClips >= 0)
             {
                 Fire();
                 _shotFiredSound.Play();
                 _muzzleFlash.Play();
-
+            }
+            else if(_clipAmmo == 0 && _numberOfClips > 0)
+            {
+                Reload();
+                // RELOAD
             }
             else
             {
@@ -58,19 +80,23 @@ public class GunController : MonoBehaviour
         }
     }
 
-    void Update()
+    #region RELOAD
+    private void Reload()
     {
-        //if (Input.GetButtonDown("Fire1")
-        //        && _playerHealth.IsAlive && _ammo > 0
-        //            && _sceneController.gameOnPause == false)
+        //var RELOAD_TIME = 1f;
+        //while (RELOAD_TIME > 0)
         //{
-        //    Fire();
-        //    _muzzleFlash.Play();
+        //    RELOAD_TIME -= Time.deltaTime;
+
         //}
-        //else if (Input.GetButtonDown("Fire1")
-        //        && _playerHealth.IsAlive && _ammo == 0)
-        //    _noAmmoSound.Play();
-    }   
+        _clipAmmo = _stockClipAmmo;
+        _numberOfClips--;
+        _reloadSound.Play();
+        Debug.Log("GUN_RELOADED");
+
+        OnGunFire?.Invoke();
+    }
+    #endregion
 
     /// <summary>
     /// Fire mechanic
@@ -82,7 +108,8 @@ public class GunController : MonoBehaviour
         shot.transform.position = transform.position;
         shot.gameObject.SetActive(true);
 
-        _ammo--;
+        //_ammo--;
+        _clipAmmo--;
 
         OnGunFire?.Invoke();
     }
@@ -92,9 +119,16 @@ public class GunController : MonoBehaviour
     /// </summary>
     private void AddAmmo()
     {
-        _ammo += _ammoFromPickup;
-        if (_ammo >= 100)
-            _ammo = 100;
+        // OLD AMMO SYSTEM
+        //_ammo += _ammoFromPickup;
+        //if (_ammo >= 100)
+        //    _ammo = 100;
+
+        // NEW AMMO SYSTEM
+        _numberOfClips += 2; // Magic number?
+        if (_numberOfClips > 6)
+            _numberOfClips = 6;            
+
         _reloadSound.Play();
     }
 

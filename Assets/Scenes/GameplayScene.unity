@@ -21940,6 +21940,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
         type: 3}
+      propertyPath: _clipAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
+        type: 3}
       propertyPath: _bulletPool
       value: 
       objectReference: {fileID: 1064029982}
@@ -21963,6 +21968,16 @@ PrefabInstance:
       propertyPath: _playerHealth
       value: 
       objectReference: {fileID: 1799169908}
+    - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
+        type: 3}
+      propertyPath: _numberOfClips
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
+        type: 3}
+      propertyPath: _stockClipAmmo
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8283149322646876501, guid: 90e94c6185520034291a1312acf3c6a0,
         type: 3}
       propertyPath: _shotFiredSound
