@@ -2,8 +2,6 @@
 
 public class AmmoPickupObject : PickupObject
 {
-    public int ammoInBox = 50;
-
     [SerializeField] private GunController _gun;
 
     public delegate void AmmoPickupObjectTaken();
@@ -11,7 +9,7 @@ public class AmmoPickupObject : PickupObject
 
     private new void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && _gun.Ammo < 100)
+        if (other.CompareTag("Player") && _gun.NumberOfClips < 6)
         {
             base.OnTriggerEnter(other);
             OnAmmoPickupObjectTaken?.Invoke();

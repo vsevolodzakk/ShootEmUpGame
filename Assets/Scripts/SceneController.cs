@@ -24,7 +24,9 @@ public class SceneController : MonoBehaviour
 
     private Scene _scene;
     
-    public bool gameOnPause = false;
+    private bool _gameOnPause = false;
+
+    public bool GameOnPause => _gameOnPause;
 
     private void Awake()
     {
@@ -45,7 +47,7 @@ public class SceneController : MonoBehaviour
 
         #endregion
 
-        // If MainMenuScene if active play music
+        // If MainMenuScene is active play music
         if (_scene.buildIndex == 0)
             _mainMenuMusic.Play();
 
@@ -97,7 +99,7 @@ public class SceneController : MonoBehaviour
     public void Pause(InputAction.CallbackContext context)
     {
         _pauseSound.Play();
-        if (!gameOnPause && _playerHealth.IsAlive)
+        if (!_gameOnPause && _playerHealth.IsAlive)
         {
             _pauseMenu.SetActive(true);
             SlowMode();
@@ -135,7 +137,7 @@ public class SceneController : MonoBehaviour
     private void NormalMode()
     {
         Cursor.visible = false;
-        gameOnPause = false;
+        _gameOnPause = false;
         Time.timeScale = 1f;
     }
 
@@ -145,7 +147,7 @@ public class SceneController : MonoBehaviour
     private void SlowMode()
     {
         Cursor.visible = true;
-        gameOnPause = true;
+        _gameOnPause = true;
         Time.timeScale = 0.1f;
     }
 
@@ -160,7 +162,6 @@ public class SceneController : MonoBehaviour
         _input.Player.ClearHiScore.Enable();
         _input.Player.ClearHiScore.performed += ClearHiScore;
         #endregion
-
     }
 
     /// <summary>

@@ -5416,14 +5416,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
+  _attackTrigger: {fileID: 6165454235889757231}
   playerPosition: {fileID: 0}
   _ps: {fileID: 151825524960988419}
   _takeHitSound: {fileID: 4418183923124401826}
   _footstepsSound: {fileID: 834300522841176197}
   _diesSound: {fileID: 5465349660150776771}
   _knifeAttackSound: {fileID: 6509998482713217026}
-  _hp: 1
-  isDead: 0
   _scorePoints: 10
 --- !u!95 &6496354501991348258
 Animator:
@@ -5458,7 +5457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnHealth: 1
   _health: 0
-  isAlive: 0
+  _isAlive: 0
 --- !u!1 &6638406139939300372
 GameObject:
   m_ObjectHideFlags: 0

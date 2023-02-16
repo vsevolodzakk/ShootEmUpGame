@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         // Movement Vector
         _movement = new Vector3(_h, 0f, _v);
 
-        if (_playerHealth.IsAlive && _sceneController.gameOnPause == false)
+        if (_playerHealth.IsAlive && _sceneController.GameOnPause == false)
         {
             AimTowardMouse();
             _isRunning = false;

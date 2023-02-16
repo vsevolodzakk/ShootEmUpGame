@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyGunController : MonoBehaviour
 {
-    [SerializeField] private Transform _gun;
+    [SerializeField] private Transform _firePoint;
     [SerializeField] private bool _burstFireMode;
     [SerializeField] private SceneController _sceneController;
 
@@ -34,7 +34,7 @@ public class EnemyGunController : MonoBehaviour
         RaycastHit _hit;
 
         // Fire
-        if(_enemyHealth.IsAlive && _sceneController.gameOnPause == false)
+        if(_enemyHealth.IsAlive && _sceneController.GameOnPause == false)
         {
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, 9)
                 && _fireTimer >= (1 / _fireRate) + Random.Range(0f,1f))
@@ -59,8 +59,8 @@ public class EnemyGunController : MonoBehaviour
     private void EnemyFire()
     {
         var _bullet = _bulletPool.Get();
-        _bullet.transform.rotation = _gun.transform.rotation;
-        _bullet.transform.position = _gun.transform.position;
+        _bullet.transform.rotation = _firePoint.transform.rotation;
+        _bullet.transform.position = _firePoint.transform.position;
         _bullet.SetActive(true);
 
         _shotFiredSound.Play();
