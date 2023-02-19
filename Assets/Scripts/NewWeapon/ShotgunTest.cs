@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GunController : MonoBehaviour
+public class ShotgunTest : MonoBehaviour
 {
     // Bullet pool object reference
     [SerializeField] private BulletPool _bulletPool;
@@ -36,6 +36,12 @@ public class GunController : MonoBehaviour
 
     [SerializeField] private Animator _playerAnimator;
     private bool _isReloading;
+
+    #region Shotgun test
+
+    [SerializeField] Transform[] _firePoints;
+
+    #endregion
 
     // Input actions
     private PlayerInputActions _actions;
@@ -75,12 +81,13 @@ public class GunController : MonoBehaviour
         {
             if (_clipAmmo > 0 && _numberOfClips >= 0)
             {
-                Fire(transform);
+                foreach (var t in _firePoints)
+                    Fire(t);
                 _shotFiredSound.Play();
                 _muzzleFlash.Play();
                 StartCoroutine(FlashingMuzzleLight());
             }
-            else if(_clipAmmo == 0 && _numberOfClips > 0)
+            else if (_clipAmmo == 0 && _numberOfClips > 0)
             {
                 StartCoroutine(ReloadWeapon());
                 // RELOAD
@@ -97,13 +104,13 @@ public class GunController : MonoBehaviour
     /// </summary>
     private void Reload(InputAction.CallbackContext context)
     {
-        if(_numberOfClips > 0)
+        if (_numberOfClips > 0)
             StartCoroutine(ReloadWeapon());
     }
 
     private IEnumerator ReloadWeapon()
     {
-        _isReloading= true;
+        _isReloading = true;
         _playerAnimator.SetBool("IsReloading", _isReloading);
         _clipAmmo = _stockClipAmmo;
         _numberOfClips--;
@@ -158,7 +165,7 @@ public class GunController : MonoBehaviour
     {
         _numberOfClips += _clipsInAmmoBox; // Magic number?
         if (_numberOfClips > 6)
-            _numberOfClips = 6;            
+            _numberOfClips = 6;
 
         _reloadSound.Play();
     }
@@ -171,3 +178,4 @@ public class GunController : MonoBehaviour
         _actions.Player.Fire.performed -= Bang;
     }
 }
+

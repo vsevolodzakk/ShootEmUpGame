@@ -15,13 +15,13 @@ public class HealthComponent : MonoBehaviour
 
     private void Awake()
     {
-        _isAlive = true;
+        
     }
 
     private void OnEnable()
     {
         HealthPickupObject.OnHealthPickupObjectTaken += AddHealth;
-
+		_isAlive = true;
         
         _health = _spawnHealth;
     }
