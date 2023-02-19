@@ -4,22 +4,37 @@ using UnityEngine.AI;
 
 public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
 {
+    // Enemy NAvMeshAgent
     [SerializeField] private NavMeshAgent _enemy;
 
+    // Trigger to detect objects in melee atack range
+    [SerializeField] private Collider _attackTrigger;
+
+    // Reference to Player location to track
     public Transform playerPosition;
+
+    // VisualFX for hit reaction
     [SerializeField] private ParticleSystem _ps;
     
+    // Enemy SoundFX
     [SerializeField] private AudioSource _takeHitSound;
     [SerializeField] private AudioSource _footstepsSound;
     [SerializeField] private AudioSource _diesSound;
     [SerializeField] private AudioSource _knifeAttackSound;
 
+    // Enemy run speed
     private float _spawningSpeed;
+
+    // Enemy Animator
     private Animator _animator;
+
+    // Running state flag
     private bool _isRunning;
 
+    // Enemy Health component
     private HealthComponent _enemyHealth;
 
+    // Amount of score point Enemy costs
     [SerializeField] private int _scorePoints;
 
     // Enemy Death Event
@@ -46,11 +61,15 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
     private void OnEnable()
     {
         _isRunning = false;
+
+        if(_attackTrigger != null)
+            _attackTrigger.enabled = true;
     }
 
     private void Start()
     {
         _enemy = GetComponent<NavMeshAgent>();
+
         _animator = GetComponent<Animator>();
 
         _enemyHealth = GetComponent<HealthComponent>();
@@ -112,10 +131,14 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
             {
                 // Enemy Death
 
-                Debug.Log("DEAD!");
+                //Debug.Log("DEAD!");
+                if(_attackTrigger != null)
+                    _attackTrigger.enabled = false;
+
                 StartCoroutine(EnemyDies());
                 OnEnemyDies?.Invoke(_scorePoints);
                 _diesSound.Play();
+
             }
             else
             {
@@ -161,12 +184,12 @@ public class EnemyControllerPooled : MonoBehaviour, IGameObjectPooled
         _animator.SetBool("isRunning", false);
         _animator.SetTrigger("gotHit");
         
-        Debug.Log("HIT!");
+        //Debug.Log("HIT!");
         
         yield return new WaitForSeconds(1f); // Magic number?
 
         _enemy.isStopped = false;
-        Debug.Log("Recover!");
+        //Debug.Log("Recover!");
     }
 
     private IEnumerator EnemyDies()

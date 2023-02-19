@@ -13,11 +13,16 @@ public class HealthComponent : MonoBehaviour
     public delegate void CharacterDeath();
     public static event CharacterDeath OnCharacterDeath;
 
+    private void Awake()
+    {
+        
+    }
+
     private void OnEnable()
     {
         HealthPickupObject.OnHealthPickupObjectTaken += AddHealth;
-
-        _isAlive = true;
+		_isAlive = true;
+        
         _health = _spawnHealth;
     }
 
