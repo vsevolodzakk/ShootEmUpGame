@@ -4856,7 +4856,7 @@ GameObject:
   - component: {fileID: 6725996116544673048}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: FirePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5373,6 +5373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
+  _attackTrigger: {fileID: 0}
   playerPosition: {fileID: 0}
   _ps: {fileID: 151825524960988419}
   _takeHitSound: {fileID: 7926797622986889425}
@@ -5392,10 +5393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6154106f1bfb4698b250611797792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gun: {fileID: 6725996116544673048}
-  _bulletPool: {fileID: 0}
-  _enemy: {fileID: 0}
-  _enemyHealth: {fileID: 4174589062329200650}
+  _firePoint: {fileID: 6725996116544673048}
   _burstFireMode: 0
   _sceneController: {fileID: 7732469076994085977, guid: 5c8d754be8d5340498e9c012d9c0b585,
     type: 3}
@@ -5433,7 +5431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnHealth: 2
   _health: 0
-  isAlive: 0
+  _isAlive: 0
 --- !u!1 &6309807175242250712
 GameObject:
   m_ObjectHideFlags: 0

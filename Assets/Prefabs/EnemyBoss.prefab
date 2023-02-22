@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 0}
+  _attackTrigger: {fileID: 0}
   playerPosition: {fileID: 0}
   _ps: {fileID: 6333800019557598976}
   _takeHitSound: {fileID: 4553447891715635662}
@@ -195,10 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6154106f1bfb4698b250611797792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gun: {fileID: 8862657173546292287}
-  _bulletPool: {fileID: 0}
-  _enemy: {fileID: 0}
-  _enemyHealth: {fileID: 4856524863042291667}
+  _firePoint: {fileID: 8862657173546292287}
   _burstFireMode: 1
   _sceneController: {fileID: 7732469076994085977, guid: 5c8d754be8d5340498e9c012d9c0b585,
     type: 3}
@@ -217,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnHealth: 6
   _health: 0
-  isAlive: 0
+  _isAlive: 0
 --- !u!1 &1437046246660000505
 GameObject:
   m_ObjectHideFlags: 0

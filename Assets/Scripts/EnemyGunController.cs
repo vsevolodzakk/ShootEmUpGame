@@ -24,7 +24,6 @@ public class EnemyGunController : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _enemyHealth = GetComponent<HealthComponent>();
     }
-
     void Update()
     {
         // Check if Player on line of fire

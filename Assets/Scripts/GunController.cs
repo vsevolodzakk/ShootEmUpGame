@@ -48,6 +48,10 @@ public class GunController : MonoBehaviour
     public delegate void GunFire();
     public static event GunFire OnGunFire;
 
+    // gun reload event
+    public delegate void GunReload();
+    public static event GunReload OnGunReload;
+
     private void Awake()
     {
         _actions = new PlayerInputActions();
@@ -83,6 +87,7 @@ public class GunController : MonoBehaviour
             else if(_clipAmmo == 0 && _numberOfClips > 0)
             {
                 StartCoroutine(ReloadWeapon());
+                
                 // RELOAD
             }
             else
@@ -105,8 +110,12 @@ public class GunController : MonoBehaviour
     {
         _isReloading= true;
         _playerAnimator.SetBool("IsReloading", _isReloading);
+
+        OnGunReload?.Invoke();
+
         _clipAmmo = _stockClipAmmo;
         _numberOfClips--;
+
         _reloadSound.Play();
         Debug.Log("GUN_RELOADED");
 
