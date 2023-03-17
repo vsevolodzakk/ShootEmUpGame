@@ -11,8 +11,8 @@ public class ShotgunTest : MonoBehaviour
     [SerializeField] private HealthComponent _playerHealth;
 
     // Gun Fire VFX
-    [SerializeField] private ParticleSystem _muzzleFlash;
-    [SerializeField] private Light _muzzleLight;
+    //[SerializeField] private ParticleSystem _muzzleFlash;
+    //[SerializeField] private Light _muzzleLight;
 
     // Scene Controller reference
     [SerializeField] private SceneController _sceneController;
@@ -30,16 +30,16 @@ public class ShotgunTest : MonoBehaviour
     [SerializeField] private int _numberOfClips;
 
     // Shot VFX
-    [SerializeField] private AudioSource _shotFiredSound;
-    [SerializeField] private AudioSource _noAmmoSound;
-    [SerializeField] private AudioSource _reloadSound;
+    //[SerializeField] private AudioSource _shotFiredSound;
+    //[SerializeField] private AudioSource _noAmmoSound;
+    //[SerializeField] private AudioSource _reloadSound;
 
     [SerializeField] private Animator _playerAnimator;
     private bool _isReloading;
 
     #region Shotgun test
 
-    [SerializeField] Transform[] _firePoints;
+    [SerializeField] private Transform[] _firePoints;
 
     #endregion
 
@@ -83,19 +83,22 @@ public class ShotgunTest : MonoBehaviour
             {
                 foreach (var t in _firePoints)
                     Fire(t);
-                _shotFiredSound.Play();
-                _muzzleFlash.Play();
-                StartCoroutine(FlashingMuzzleLight());
+                //_shotFiredSound.Play();
+                //_muzzleFlash.Play();
+                //StartCoroutine(FlashingMuzzleLight());
+                _clipAmmo--;
+
+                Debug.Log(_clipAmmo.ToString() + " -- " + _numberOfClips.ToString());
             }
             else if (_clipAmmo == 0 && _numberOfClips > 0)
             {
                 StartCoroutine(ReloadWeapon());
                 // RELOAD
             }
-            else
-            {
-                _noAmmoSound.Play();
-            }
+            //else
+            //{
+            //    _noAmmoSound.Play();
+            //}
         }
     }
 
@@ -114,7 +117,7 @@ public class ShotgunTest : MonoBehaviour
         _playerAnimator.SetBool("IsReloading", _isReloading);
         _clipAmmo = _stockClipAmmo;
         _numberOfClips--;
-        _reloadSound.Play();
+        //_reloadSound.Play();
         Debug.Log("GUN_RELOADED");
 
         OnGunFire?.Invoke();
@@ -124,12 +127,12 @@ public class ShotgunTest : MonoBehaviour
         _playerAnimator.SetBool("IsReloading", _isReloading);
     }
 
-    private IEnumerator FlashingMuzzleLight()
-    {
-        _muzzleLight.enabled = true;
-        yield return new WaitForSeconds(0.1f);
-        _muzzleLight.enabled = false;
-    }
+    //private IEnumerator FlashingMuzzleLight()
+    //{
+    //    _muzzleLight.enabled = true;
+    //    yield return new WaitForSeconds(0.1f);
+    //    _muzzleLight.enabled = false;
+    //}
 
     /// <summary>
     /// Fire mechanic
@@ -153,7 +156,7 @@ public class ShotgunTest : MonoBehaviour
         shot.transform.position = firePoint.transform.position;
         shot.gameObject.SetActive(true);
 
-        _clipAmmo--;
+        //_clipAmmo--;
 
         OnGunFire?.Invoke();
     }
@@ -167,7 +170,7 @@ public class ShotgunTest : MonoBehaviour
         if (_numberOfClips > 6)
             _numberOfClips = 6;
 
-        _reloadSound.Play();
+        //_reloadSound.Play();
     }
 
     private void OnDisable()
