@@ -57,6 +57,30 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ReloadWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""839cf2dc-9c6d-47ed-8516-80078118301a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SelectWeapon1"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7002f81-ba69-48dc-be95-b2858e7ba069"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SelectWeapon2"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9f9f09d-6eba-4381-98a9-ce83dd8bb38a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -299,6 +323,39 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ClearHiScore"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68065622-e065-4175-80cf-c5f07f3288e7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ReloadWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""101d7980-00a7-471f-ab93-e74a46c7b8bf"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SelectWeapon1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33fc57ad-cdd7-42da-8950-a97b862c3e1d"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SelectWeapon2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -892,6 +949,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_ClearHiScore = m_Player.FindAction("ClearHiScore", throwIfNotFound: true);
+        m_Player_ReloadWeapon = m_Player.FindAction("ReloadWeapon", throwIfNotFound: true);
+        m_Player_SelectWeapon1 = m_Player.FindAction("SelectWeapon1", throwIfNotFound: true);
+        m_Player_SelectWeapon2 = m_Player.FindAction("SelectWeapon2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -958,6 +1018,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_ClearHiScore;
+    private readonly InputAction m_Player_ReloadWeapon;
+    private readonly InputAction m_Player_SelectWeapon1;
+    private readonly InputAction m_Player_SelectWeapon2;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -967,6 +1030,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @ClearHiScore => m_Wrapper.m_Player_ClearHiScore;
+        public InputAction @ReloadWeapon => m_Wrapper.m_Player_ReloadWeapon;
+        public InputAction @SelectWeapon1 => m_Wrapper.m_Player_SelectWeapon1;
+        public InputAction @SelectWeapon2 => m_Wrapper.m_Player_SelectWeapon2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -991,6 +1057,15 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @ClearHiScore.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClearHiScore;
                 @ClearHiScore.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClearHiScore;
                 @ClearHiScore.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClearHiScore;
+                @ReloadWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReloadWeapon;
+                @ReloadWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReloadWeapon;
+                @ReloadWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReloadWeapon;
+                @SelectWeapon1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon1;
+                @SelectWeapon1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon1;
+                @SelectWeapon1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon1;
+                @SelectWeapon2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon2;
+                @SelectWeapon2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon2;
+                @SelectWeapon2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectWeapon2;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1010,6 +1085,15 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @ClearHiScore.started += instance.OnClearHiScore;
                 @ClearHiScore.performed += instance.OnClearHiScore;
                 @ClearHiScore.canceled += instance.OnClearHiScore;
+                @ReloadWeapon.started += instance.OnReloadWeapon;
+                @ReloadWeapon.performed += instance.OnReloadWeapon;
+                @ReloadWeapon.canceled += instance.OnReloadWeapon;
+                @SelectWeapon1.started += instance.OnSelectWeapon1;
+                @SelectWeapon1.performed += instance.OnSelectWeapon1;
+                @SelectWeapon1.canceled += instance.OnSelectWeapon1;
+                @SelectWeapon2.started += instance.OnSelectWeapon2;
+                @SelectWeapon2.performed += instance.OnSelectWeapon2;
+                @SelectWeapon2.canceled += instance.OnSelectWeapon2;
             }
         }
     }
@@ -1180,6 +1264,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnClearHiScore(InputAction.CallbackContext context);
+        void OnReloadWeapon(InputAction.CallbackContext context);
+        void OnSelectWeapon1(InputAction.CallbackContext context);
+        void OnSelectWeapon2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

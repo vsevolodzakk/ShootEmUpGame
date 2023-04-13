@@ -29,6 +29,10 @@ public class GunController : MonoBehaviour
     // Number of ammo clips carriyng
     [SerializeField] private int _numberOfClips;
 
+    // NEW WEAPON TEST
+
+    [SerializeField] private Transform[] _firePoints;
+
     // Shot VFX
     [SerializeField] private AudioSource _shotFiredSound;
     [SerializeField] private AudioSource _noAmmoSound;
@@ -72,6 +76,7 @@ public class GunController : MonoBehaviour
         _isReloading = false;
     }
 
+
     private void Bang(InputAction.CallbackContext context)
     {
         // Player gun fire conditions
@@ -79,9 +84,16 @@ public class GunController : MonoBehaviour
         {
             if (_clipAmmo > 0 && _numberOfClips >= 0)
             {
-                Fire(transform);
+                foreach(var t in _firePoints)
+                    Fire(t);
+
                 _shotFiredSound.Play();
                 _muzzleFlash.Play();
+
+                _clipAmmo--;
+
+                OnGunFire?.Invoke();
+
                 StartCoroutine(FlashingMuzzleLight());
             }
             else if(_clipAmmo == 0 && _numberOfClips > 0)
@@ -119,7 +131,7 @@ public class GunController : MonoBehaviour
         _reloadSound.Play();
         Debug.Log("GUN_RELOADED");
 
-        OnGunFire?.Invoke();
+        OnGunFire?.Invoke(); // ???
         yield return new WaitForSeconds(2.3f);
 
         _isReloading = false;
@@ -133,21 +145,6 @@ public class GunController : MonoBehaviour
         _muzzleLight.enabled = false;
     }
 
-    /// <summary>
-    /// Fire mechanic
-    /// </summary>
-    //private void Fire()
-    //{
-    //    var shot = _bulletPool.Get();
-    //    shot.transform.rotation = transform.rotation;
-    //    shot.transform.position = transform.position;
-    //    shot.gameObject.SetActive(true);
-
-    //    _clipAmmo--;
-
-    //    OnGunFire?.Invoke();
-    //}
-
     private void Fire(Transform firePoint)
     {
         var shot = _bulletPool.Get();
@@ -155,9 +152,7 @@ public class GunController : MonoBehaviour
         shot.transform.position = firePoint.transform.position;
         shot.gameObject.SetActive(true);
 
-        _clipAmmo--;
-
-        OnGunFire?.Invoke();
+ 
     }
 
     /// <summary>

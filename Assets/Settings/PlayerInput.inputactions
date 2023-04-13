@@ -44,6 +44,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ReloadWeapon",
+                    "type": "Button",
+                    "id": "839cf2dc-9c6d-47ed-8516-80078118301a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SelectWeapon1",
+                    "type": "Button",
+                    "id": "a7002f81-ba69-48dc-be95-b2858e7ba069",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SelectWeapon2",
+                    "type": "Button",
+                    "id": "d9f9f09d-6eba-4381-98a9-ce83dd8bb38a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -286,6 +310,39 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ClearHiScore",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68065622-e065-4175-80cf-c5f07f3288e7",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ReloadWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "101d7980-00a7-471f-ab93-e74a46c7b8bf",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SelectWeapon1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33fc57ad-cdd7-42da-8950-a97b862c3e1d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SelectWeapon2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
