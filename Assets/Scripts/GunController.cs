@@ -48,6 +48,8 @@ public class GunController : MonoBehaviour
     public int ClipAmmo => _clipAmmo;
     public int NumberOfClips => _numberOfClips;
 
+    public bool IsReloading => _isReloading;
+
     // gun fire event
     public delegate void GunFire();
     public static event GunFire OnGunFire;
@@ -65,7 +67,7 @@ public class GunController : MonoBehaviour
     {
         AmmoPickupObject.OnAmmoPickupObjectTaken += AddAmmo;
 
-        _clipAmmo = _stockClipAmmo;
+        //_clipAmmo = _stockClipAmmo;
 
         _actions.Player.Fire.Enable();
         _actions.Player.ReloadWeapon.Enable();
@@ -96,7 +98,7 @@ public class GunController : MonoBehaviour
 
                 StartCoroutine(FlashingMuzzleLight());
             }
-            else if(_clipAmmo == 0 && _numberOfClips > 0)
+            else if(_clipAmmo == 0 && _numberOfClips > 0 && gameObject.activeSelf == true)
             {
                 StartCoroutine(ReloadWeapon());
                 
@@ -114,7 +116,7 @@ public class GunController : MonoBehaviour
     /// </summary>
     private void Reload(InputAction.CallbackContext context)
     {
-        if(_numberOfClips > 0)
+        if(_numberOfClips > 0 && gameObject.activeSelf == true)
             StartCoroutine(ReloadWeapon());
     }
 
@@ -151,8 +153,6 @@ public class GunController : MonoBehaviour
         shot.transform.rotation = firePoint.transform.rotation;
         shot.transform.position = firePoint.transform.position;
         shot.gameObject.SetActive(true);
-
- 
     }
 
     /// <summary>

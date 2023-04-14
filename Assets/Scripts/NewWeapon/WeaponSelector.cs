@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class WeaponSelector : MonoBehaviour
 {
-
-    private int _selectedWeapon = 0;
     private PlayerInputActions _actions;
 
+    public delegate void WeaponSwitched();
+    public static event WeaponSwitched OnWeaponSwitch;
 
     private void Awake()
     {
         _actions = new PlayerInputActions();
-    }
-
-
-    void Start()
-    {
-        //SelectWeapon(_selectedWeapon);
     }
 
     private void OnEnable()
@@ -32,7 +23,7 @@ public class WeaponSelector : MonoBehaviour
     }
 
     private void SelectFirstWeapon(InputAction.CallbackContext context)
-    {
+    { 
         SelectWeapon(0);
     }
 
@@ -43,21 +34,17 @@ public class WeaponSelector : MonoBehaviour
 
     private void SelectWeapon(int selectedWeapon)
     {
-        int i = selectedWeapon;
+        int i = 0;
         foreach(Transform weapon in transform)
         {
-            if(i == _selectedWeapon)
+            if(i == selectedWeapon)
+            {
                 weapon.gameObject.SetActive(true);
+                OnWeaponSwitch?.Invoke();
+            }
             else 
                 weapon.gameObject.SetActive(false);
-
             i++;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

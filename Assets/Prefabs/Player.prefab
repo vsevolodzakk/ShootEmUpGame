@@ -19,8 +19,8 @@ MonoBehaviour:
   _sceneController: {fileID: 0}
   _stockClipAmmo: 8
   _clipsInAmmoBox: 3
-  _clipAmmo: 0
-  _numberOfClips: 0
+  _clipAmmo: 8
+  _numberOfClips: 1
   _firePoints:
   - {fileID: 8407657324635264573}
   - {fileID: 8665669168620338297}
@@ -998,7 +998,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5635609866416932516, guid: 38446304c6032f84b8cd0d58fd4d7f44,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: d7bcf8c58b86be14abeaab2cdebe5e59, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 948a52fe830828b469aef59b05b40351, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1216,7 +1216,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5635609866416932516, guid: 38446304c6032f84b8cd0d58fd4d7f44,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 020eb0f64bf7dc043abff3325334ff30, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c868ae78a7a19e44b949f016ccb13191, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4906,8 +4906,8 @@ MonoBehaviour:
   _sceneController: {fileID: 0}
   _stockClipAmmo: 20
   _clipsInAmmoBox: 3
-  _clipAmmo: 0
-  _numberOfClips: 0
+  _clipAmmo: 20
+  _numberOfClips: 2
   _firePoints:
   - {fileID: 8488471836865494438}
   _shotFiredSound: {fileID: 1549409141447988169}
