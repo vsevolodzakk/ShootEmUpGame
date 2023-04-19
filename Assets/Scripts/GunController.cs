@@ -48,7 +48,10 @@ public class GunController : MonoBehaviour
     public int ClipAmmo => _clipAmmo;
     public int NumberOfClips => _numberOfClips;
 
-    public bool IsReloading => _isReloading;
+    //public bool IsReloading => _isReloading;
+
+    //Test weapon Item Data
+    public WeaponItemData weaponData;
 
     // gun fire event
     public delegate void GunFire();
@@ -78,7 +81,6 @@ public class GunController : MonoBehaviour
         _isReloading = false;
     }
 
-
     private void Bang(InputAction.CallbackContext context)
     {
         // Player gun fire conditions
@@ -98,7 +100,7 @@ public class GunController : MonoBehaviour
 
                 StartCoroutine(FlashingMuzzleLight());
             }
-            else if(_clipAmmo == 0 && _numberOfClips > 0 && gameObject.activeSelf == true)
+            else if(_clipAmmo == 0 && _numberOfClips > 0 && gameObject.activeInHierarchy == true)
             {
                 StartCoroutine(ReloadWeapon());
                 
@@ -131,7 +133,7 @@ public class GunController : MonoBehaviour
         _numberOfClips--;
 
         _reloadSound.Play();
-        Debug.Log("GUN_RELOADED");
+        Debug.Log("GUN_RELOADED " + gameObject.name.ToString());
 
         OnGunFire?.Invoke(); // ???
         yield return new WaitForSeconds(2.3f);
@@ -172,6 +174,9 @@ public class GunController : MonoBehaviour
         AmmoPickupObject.OnAmmoPickupObjectTaken -= AddAmmo;
 
         _actions.Player.Fire.Disable();
+        _actions.Player.ReloadWeapon.Disable();
+
         _actions.Player.Fire.performed -= Bang;
+        _actions.Player.ReloadWeapon.performed -= Reload;
     }
 }

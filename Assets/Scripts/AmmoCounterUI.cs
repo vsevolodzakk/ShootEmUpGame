@@ -7,6 +7,7 @@ public class AmmoCounterUI : MonoBehaviour
     private Text _ammoText;
 
     [SerializeField] private Transform _weaponSelector;
+    [SerializeField] private Transform _weaponIconUI;
 
     private void OnEnable()
     {
@@ -24,9 +25,13 @@ public class AmmoCounterUI : MonoBehaviour
     /// </summary>
     private void CountAmmo()
     {
-        GunController ammoCount = _weaponSelector.GetComponentInChildren<GunController>();
+        var ammoCount = _weaponSelector.GetComponentInChildren<GunController>();
+        var weaponIcon = _weaponIconUI.GetComponent<Image>();
 
         _ammoText.text = "Ammo:" + ammoCount.ClipAmmo.ToString() + "-" + ammoCount.NumberOfClips.ToString();
+        weaponIcon.sprite = ammoCount.weaponData.weaponIcon;
+
+        Debug.Log(ammoCount.weaponData.id.ToString());
 
         ////_ammoText.text = "Ammo: " + _gun.Ammo.ToString();
         //_ammoText.text = "Ammo:" + _gun.ClipAmmo.ToString() 

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 1
   _stockAmmo: 8
+  _weaponIcon: {fileID: 21300000, guid: 3c3cf1c803517824fafdb918fd219605, type: 3}

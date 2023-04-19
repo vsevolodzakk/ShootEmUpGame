@@ -47,4 +47,13 @@ public class WeaponSelector : MonoBehaviour
             i++;
         }
     }
+
+    private void OnDisable()
+    {
+        _actions.Player.SelectWeapon1.Disable();
+        _actions.Player.SelectWeapon2.Disable();
+
+        _actions.Player.SelectWeapon1.performed -= SelectFirstWeapon;
+        _actions.Player.SelectWeapon2.performed -= SelectSecondWeapon;
+    }
 }
